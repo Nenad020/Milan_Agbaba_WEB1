@@ -81,13 +81,38 @@ namespace MVC
 		}
 
 		//Pogledaj za korisnike
-		public static void SaveReservations(List<Reservation> Reservations)
+		public static void SaveReservations(List<Reservation> reservations)
 		{
 			string path = GetPath() + "\\reservations.xml";
 
 			XmlSerializer serializer = new XmlSerializer(typeof(List<Reservation>));
 			StreamWriter writer = new StreamWriter(path);
-			serializer.Serialize(writer, Reservations);
+			serializer.Serialize(writer, reservations);
+			writer.Close();
+		}
+
+		//Pogledaj za korisnike
+		public static List<Comment> LoadComments()
+		{
+			List<Comment> comments;
+			string path = GetPath() + "\\comments.xml";
+
+			XmlSerializer serializer = new XmlSerializer(typeof(List<Comment>));
+			TextReader reader = new StreamReader(path);
+			comments = (List<Comment>)serializer.Deserialize(reader);
+			reader.Close();
+
+			return comments;
+		}
+
+		//Pogledaj za korisnike
+		public static void SaveComments(List<Comment> comments)
+		{
+			string path = GetPath() + "\\comments.xml";
+
+			XmlSerializer serializer = new XmlSerializer(typeof(List<Comment>));
+			StreamWriter writer = new StreamWriter(path);
+			serializer.Serialize(writer, comments);
 			writer.Close();
 		}
 	}
