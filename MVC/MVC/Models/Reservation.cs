@@ -49,5 +49,12 @@ namespace MVC.Models
 
 			return true;
 		}
+
+		//Pozivamo metodu za generisanje random ID-ija
+		public void GenerateID()
+		{
+			int id = GeneratorHelper.GenerisiRandomID();
+			ID = "Reservation_" + id;
+		}
 	}
 }

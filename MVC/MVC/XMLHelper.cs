@@ -11,6 +11,7 @@ namespace MVC
 	public class XMLHelper
 	{
 		//Vraca putanju do xml fajlova
+		//TODO: PROMENI PUTANJU KAD POKRECES PROJEKAT SA DRUGOG RACUNARA
 		public static string GetPath()
 		{
 			return @"D:\Projekti\Web_1\Projekti\Milan_Agbaba_WEB1\MVC\MVC\bin";
@@ -113,6 +114,81 @@ namespace MVC
 			XmlSerializer serializer = new XmlSerializer(typeof(List<Comment>));
 			StreamWriter writer = new StreamWriter(path);
 			serializer.Serialize(writer, comments);
+			writer.Close();
+		}
+
+		//Pogledaj za korisnike
+		public static List<Arrangement> LoadArrangements()
+		{
+			List<Arrangement> arrangements;
+			string path = GetPath() + "\\arrangements.xml";
+
+			XmlSerializer serializer = new XmlSerializer(typeof(List<Arrangement>));
+			TextReader reader = new StreamReader(path);
+			arrangements = (List<Arrangement>)serializer.Deserialize(reader);
+			reader.Close();
+
+			return arrangements;
+		}
+
+		//Pogledaj za korisnike
+		public static void SaveArrangements(List<Arrangement> arrangements)
+		{
+			string path = GetPath() + "\\arrangements.xml";
+
+			XmlSerializer serializer = new XmlSerializer(typeof(List<Arrangement>));
+			StreamWriter writer = new StreamWriter(path);
+			serializer.Serialize(writer, arrangements);
+			writer.Close();
+		}
+
+		//Pogledaj za korisnike
+		public static List<AccommodationUnit> LoadAccommodationUnits()
+		{
+			List<AccommodationUnit> accommodationUnits;
+			string path = GetPath() + "\\accommodationUnits.xml";
+
+			XmlSerializer serializer = new XmlSerializer(typeof(List<AccommodationUnit>));
+			TextReader reader = new StreamReader(path);
+			accommodationUnits = (List<AccommodationUnit>)serializer.Deserialize(reader);
+			reader.Close();
+
+			return accommodationUnits;
+		}
+
+		//Pogledaj za korisnike
+		public static void SaveAccommodationUnits(List<AccommodationUnit> accommodationUnits)
+		{
+			string path = GetPath() + "\\accommodationUnits.xml";
+
+			XmlSerializer serializer = new XmlSerializer(typeof(List<AccommodationUnit>));
+			StreamWriter writer = new StreamWriter(path);
+			serializer.Serialize(writer, accommodationUnits);
+			writer.Close();
+		}
+
+		//Pogledaj za korisnike
+		public static List<Accommodation> LoadAccommodations()
+		{
+			List<Accommodation> accommodations;
+			string path = GetPath() + "\\accommodations.xml";
+
+			XmlSerializer serializer = new XmlSerializer(typeof(List<Accommodation>));
+			TextReader reader = new StreamReader(path);
+			accommodations = (List<Accommodation>)serializer.Deserialize(reader);
+			reader.Close();
+
+			return accommodations;
+		}
+
+		//Pogledaj za korisnike
+		public static void SaveAccommodations(List<Accommodation> accommodations)
+		{
+			string path = GetPath() + "\\accommodations.xml";
+
+			XmlSerializer serializer = new XmlSerializer(typeof(List<Accommodation>));
+			StreamWriter writer = new StreamWriter(path);
+			serializer.Serialize(writer, accommodations);
 			writer.Close();
 		}
 	}
