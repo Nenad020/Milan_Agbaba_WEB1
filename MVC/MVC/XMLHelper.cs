@@ -12,9 +12,9 @@ namespace MVC
 	{
 		//Vraca putanju do xml fajlova
 		//TODO: PROMENI PUTANJU KAD POKRECES PROJEKAT SA DRUGOG RACUNARA
-		public static string GetPath()
+		private static string GetPath()
 		{
-			return @"D:\Projekti\Web_1\Projekti\Milan_Agbaba_WEB1\MVC\MVC\bin";
+			return @"D:\Projekti\Web_1\Projekti\Milan_Agbaba_WEB1\MVC";
 		}
 
 		//Otvara xml fajl gde se nalaze korisnici i vraca listu

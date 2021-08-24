@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <User>
+    <Username>milan</Username>
+    <Password>milan</Password>
+    <Name>milan</Name>
+    <Lastname>milan</Lastname>
+    <Gender>Male</Gender>
+    <Email>milan@gmail.com</Email>
+    <DateOfBirth>2021-07-26T00:00:00</DateOfBirth>
+    <Role>Tourist</Role>
+    <CreatedArrangemetsID />
+    <NumberOfCanceledTrips>0</NumberOfCanceledTrips>
+    <IsBaned>false</IsBaned>
+  </User>
+</ArrayOfUser>

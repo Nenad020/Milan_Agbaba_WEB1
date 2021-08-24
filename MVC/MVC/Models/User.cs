@@ -27,7 +27,7 @@ namespace MVC.Models
 		public string Email { get; set; }
 
 		//Datum rodjenja
-		public string DateOfBirth { get; set; }
+		public DateTime DateOfBirth { get; set; }
 
 		//Uloga, po default je turista
 		public Role Role { get; set; } = Role.Tourist;
@@ -55,7 +55,7 @@ namespace MVC.Models
 			Lastname = lastname;
 			Gender = gender;
 			Email = email;
-			DateOfBirth = dateOfBirth.ToString("dd/MM/yyyy");
+			DateOfBirth = dateOfBirth;
 			Role = role;
 			CreatedArrangemetsID = new List<int>();
 			NumberOfCanceledTrips = 0;
@@ -67,7 +67,7 @@ namespace MVC.Models
 		public bool Validate()
 		{
 			if (Username == null || Username == "" || Password == null || Password == "" || Name == null || Name == "" || Lastname == null || Lastname == "" ||
-				Email == null || Email == "" || DateOfBirth == null || DateOfBirth == "")
+				Email == null || Email == "" || DateOfBirth == null)
 			{
 				return false;
 			}

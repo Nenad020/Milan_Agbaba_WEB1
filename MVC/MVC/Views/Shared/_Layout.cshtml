@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using MVC.Models
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -7,6 +9,11 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
+
+@{
+    User user = (User)HttpContext.Current.Application["user"];
+}
+
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -16,13 +23,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (user == null)
+                    {
+                        <li>@Html.ActionLink("Register", "OpenRegisterPage", "LogInRegister")</li>
+                        <li>@Html.ActionLink("LogIn", "OpenLogInPage", "LogInRegister")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Profile", "OpenProfilePage", "LogInRegister")</li>
+                        <li>@Html.ActionLink("LogOff", "LogOff", "LogInRegister")</li>
+                    }
                 </ul>
             </div>
         </div>
