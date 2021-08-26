@@ -36,7 +36,7 @@ namespace MVC.Controllers
 			bool exists = CheckIfUserExists(user.Username);
 			if (exists == true)
 			{
-				ViewBag.Message = "User with username: " + "already exists!";
+				ViewBag.Message = "User with username: " + user.Username + " already exists!";
 				return View();
 			}
 
@@ -48,6 +48,45 @@ namespace MVC.Controllers
 
 			//Pozovemo view za Logovanje korisnika
 			return View("LogIn");
+		}
+
+		//Otvara se prozor za logovanje korisnika
+		public ActionResult OpenLogInPage()
+		{
+			return View("LogIn");
+		}
+
+		public ActionResult LogIn(User user)
+		{
+			//Vrsi se validacija unetih vrednosti
+			bool validate = user.ValidateLogIn();
+			if (validate == false)
+			{
+				ViewBag.Message = "Input fields can't be empty!";
+				return View();
+			}
+
+			//Ocitavamo sve korisnike iz baze
+			LoadUsers();
+
+			//Proveravamo da li je korisnik vec postoji u bazi sa datim kredencijalima
+			User exists = CheckIfUserExists(user.Username, user.Password);
+			if (exists == null)
+			{
+				ViewBag.Message = "User with username: " + user.Username + " doesn't exists!";
+				return View();
+			}
+
+			//Ubacujemo korisnika u sesiju
+			System.Web.HttpContext.Current.Application["user"] = exists;
+
+			//I otvaramo akciju za ispis aktivnih aranzmana na pocetnoj stranici
+			return RedirectToAction("../Home/Index");
+		}
+
+		public ActionResult OpenProfilePage()
+		{
+			return View("Profile");
 		}
 
 		//Vrsi se provera da li korisnik postoji u listi korisnika
@@ -66,6 +105,25 @@ namespace MVC.Controllers
 
 			//U suprotnom ne postoji
 			return false;
+		}
+
+		//Vrsi se provera da li korisnik postoji u listi korisnika
+		private User CheckIfUserExists(string username, string password)
+		{
+			//Prolazimo kroz svakog korisnika
+			foreach (var user in users)
+			{
+				//Ako je korisnicko ime jednako onom sto smo prosledili kao parametar
+				//I ako je sifra jednaka isto onoj sto prosledili kao parametar
+				if (user.Username == username && user.Password == password)
+				{
+					//Znaci da korisnik postoji
+					return user;
+				}
+			}
+
+			//U suprotnom ne postoji
+			return null;
 		}
 
 		//Ucitavamo podatke iz baze i upisujemo u listu

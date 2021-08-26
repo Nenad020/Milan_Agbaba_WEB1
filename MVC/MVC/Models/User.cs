@@ -74,5 +74,16 @@ namespace MVC.Models
 
 			return true;
 		}
+
+		//Vrsi se validacija ali samo za logovanje
+		public bool ValidateLogIn()
+		{
+			if (Username == null || Username == "" || Password == null || Password == "")
+			{
+				return false;
+			}
+
+			return true;
+		}
 	}
 }

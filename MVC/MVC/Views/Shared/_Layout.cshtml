@@ -30,12 +30,12 @@
                     @if (user == null)
                     {
                         <li>@Html.ActionLink("Register", "OpenRegisterPage", "LogInRegister")</li>
-                        <li>@Html.ActionLink("LogIn", "OpenLogInPage", "LogInRegister")</li>
+                        <li>@Html.ActionLink("Log in", "OpenLogInPage", "LogInRegister")</li>
                     }
                     else
                     {
                         <li>@Html.ActionLink("Profile", "OpenProfilePage", "LogInRegister")</li>
-                        <li>@Html.ActionLink("LogOff", "LogOff", "LogInRegister")</li>
+                        <li>@Html.ActionLink("Log off", "LogOff", "LogInRegister")</li>
                     }
                 </ul>
             </div>

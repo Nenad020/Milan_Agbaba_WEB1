@@ -2,22 +2,14 @@
 @model User
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Profile";
 
-    if (ViewBag.Message != null)
-    {
-        <script type="text/javascript">
-
-            window.onload = function () {
-                alert("@ViewBag.Message");
-            };
-        </script>
-    }
+    User user = (User)HttpContext.Current.Application["user"];
 }
 
-<h2>Register</h2>
+<h2>Profile</h2>
 
-@using (Html.BeginForm("Register", "LogInRegister", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
@@ -27,7 +19,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.Username, new { @Value = user.Username })
                 @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.PasswordFor(model => model.Password, new { @Value = user.Password })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Name, new { @Value = user.Name })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -51,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Lastname, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Lastname, new { @Value = user.Lastname })
                 @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -62,7 +54,14 @@
                 <select name="Gender" id="Gender" class="form-control">
                     @foreach (var type in Enum.GetValues(typeof(Gender)))
                     {
-                        <option class="form-control" value="@type">@type</option>
+                        if (user.Gender == (Gender)type)
+                        {
+                            <option selected class="form-control" value="@type">@type</option>
+                        }
+                        else
+                        {
+                            <option class="form-control" value="@type">@type</option>
+                        }
                     }
                 </select>
             </div>
@@ -71,7 +70,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Email, new { @Value = user.Email })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -79,13 +78,13 @@
         <div class="form-group">
             <label class="control-label col-md-2">Date of birth</label>
             <div class="col-md-10">
-                <input type="date" class="form-control" name="DateOfBirth">
+                <input type="date" class="form-control" name="DateOfBirth" value=@user.DateOfBirth>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Register" class="btn btn-default" />
+                <input type="submit" value="Update" class="btn btn-default" />
             </div>
         </div>
     </div>
