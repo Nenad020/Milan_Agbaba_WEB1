@@ -23,16 +23,16 @@ namespace MVC.Models
 		public string Destination { get; set; }
 
 		//Pocetak aranzmana
-		public string StartDateOfArrangement { get; set; }
+		public DateTime StartDateOfArrangement { get; set; }
 
 		//Kraj aranzmana
-		public string EndDateOfArrangement { get; set; }
+		public DateTime EndDateOfArrangement { get; set; }
 
 		//ID startne lokacije
 		public int StartLocationID { get; set; }
 
 		//Vreme okupljanja grupe
-		public string StartTime { get; set; }
+		public DateTime StartTime { get; set; }
 
 		//Broj putnika
 		public int NumberOfPassengers { get; set; }
@@ -65,10 +65,10 @@ namespace MVC.Models
 			ArrangementType = arrangementType;
 			TransportationType = transportationType;
 			Destination = destination;
-			StartDateOfArrangement = startDateOfArrangement.ToString("dd/MM/yyyy");
-			EndDateOfArrangement = endDateOfArrangement.ToString("dd/MM/yyyy");
+			StartDateOfArrangement = startDateOfArrangement;
+			EndDateOfArrangement = endDateOfArrangement;
 			StartLocationID = startLocationID;
-			StartTime = startTime.ToString("HH:mm");
+			StartTime = startTime;
 			NumberOfPassengers = numberOfPassengers;
 			Description = description;
 			TravelProgram = travelProgram;
@@ -80,10 +80,9 @@ namespace MVC.Models
 		//Pogledaj kako je napisano u User.cs
 		public bool Validate()
 		{
-			if (Name == null || Name == "" || Destination == null || Destination == "" || StartDateOfArrangement == null || StartDateOfArrangement == "" ||
-				EndDateOfArrangement == null || EndDateOfArrangement == "" || StartLocationID <= 0 || StartTime == null || StartTime == "" || 
-				NumberOfPassengers <= 0 || Description == null || Description == "" || TravelProgram == null || TravelProgram == "" ||
-				PosterOfArrangement == null || PosterOfArrangement == "" || AccommodationID <= 0)
+			if (Name == null || Name == "" || Destination == null || Destination == "" || StartDateOfArrangement == null || EndDateOfArrangement == null || 
+				StartLocationID <= 0 || StartTime == null || NumberOfPassengers <= 0 || Description == null || Description == "" || TravelProgram == null || 
+				TravelProgram == "" || PosterOfArrangement == null || PosterOfArrangement == "" || AccommodationID <= 0)
 			{
 				return false;
 			}

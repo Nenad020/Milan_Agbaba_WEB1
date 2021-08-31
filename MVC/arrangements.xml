@@ -1,2 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfArrangement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<ArrayOfArrangement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Arrangement>
+    <ID>1</ID>
+    <Name>Bec</Name>
+    <ArrangementType>NightWithBreakfast</ArrangementType>
+    <TransportationType>Bus</TransportationType>
+    <Destination>Bec</Destination>
+    <StartDateOfArrangement>2021-09-20T00:00:00</StartDateOfArrangement>
+    <EndDateOfArrangement>2021-09-24T00:00:00</EndDateOfArrangement>
+    <StartLocationID>1</StartLocationID>
+    <StartTime>2021-09-20T04:30:00</StartTime>
+    <NumberOfPassengers>30</NumberOfPassengers>
+    <Description>---</Description>
+    <TravelProgram>---</TravelProgram>
+    <PosterOfArrangement>Bec.jpg</PosterOfArrangement>
+    <AccommodationID>1</AccommodationID>
+    <IsRemoved>false</IsRemoved>
+  </Arrangement>
+  <Arrangement>
+    <ID>2</ID>
+    <Name>Egipat</Name>
+    <ArrangementType>AllInclusive</ArrangementType>
+    <TransportationType>Airplane</TransportationType>
+    <Destination>Egipat</Destination>
+    <StartDateOfArrangement>2021-07-22T00:00:00</StartDateOfArrangement>
+    <EndDateOfArrangement>2021-07-30T00:00:00</EndDateOfArrangement>
+    <StartLocationID>1</StartLocationID>
+    <StartTime>2021-07-22T01:00:00</StartTime>
+    <NumberOfPassengers>10</NumberOfPassengers>
+    <Description>---</Description>
+    <TravelProgram>---</TravelProgram>
+    <PosterOfArrangement>Egipat.jpg</PosterOfArrangement>
+    <AccommodationID>2</AccommodationID>
+    <IsRemoved>false</IsRemoved>
+  </Arrangement>
+</ArrayOfArrangement>

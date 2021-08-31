@@ -210,7 +210,7 @@ namespace MVC.Controllers
 			comments = XMLHelper.LoadComments();
 		}
 
-		//Listu korisnika upisujemo u bazu
+		//Listu komentara upisujemo u bazu
 		private void SaveComments()
 		{
 			XMLHelper.SaveComments(comments);
@@ -222,7 +222,7 @@ namespace MVC.Controllers
 			reservations = XMLHelper.LoadReservations();
 		}
 
-		//Listu korisnika upisujemo u bazu
+		//Listu rezervacija upisujemo u bazu
 		private void SaveReservations()
 		{
 			XMLHelper.SaveReservations(reservations);

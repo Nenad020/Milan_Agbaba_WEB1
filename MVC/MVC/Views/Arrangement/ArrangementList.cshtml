@@ -1,0 +1,136 @@
+﻿@using MVC.Models
+@model IEnumerable<Arrangement>
+
+@{
+    ViewBag.Title = "ArrangementList";
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+
+    List<Arrangement> arrangements = (List<Arrangement>)HttpContext.Current.Application["arrangements"];
+    User user = (User)HttpContext.Current.Application["user"];
+}
+
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+
+<h2>Arrangement List</h2>
+
+<table class="table sortable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDateOfArrangement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDateOfArrangement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PosterOfArrangement)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in arrangements)
+    {
+        if (item.IsRemoved == false)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDateOfArrangement)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDateOfArrangement)
+                </td>
+                <td>
+                    <img src="~/Content/Pictures/@item.PosterOfArrangement" width="200" height="100" />
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "Arrangement", new { id = item.ID }, "") |
+
+                    @if (item.EndDateOfArrangement < DateTime.Now)
+                    {
+                        @Html.ActionLink("See comments", "ArrangmentComments", "Comment", new { id = item.ID }, "")
+                    }
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+@using (Html.BeginForm("SearchArrangements", "Arrangement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group row">
+        <label class="control-label col-md-2">Start date (min)</label>
+        <div class="col-md-10">
+            <input name="StartTimeMin" type="date">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Start date (max)</label>
+        <div class="col-md-10">
+            <input name="StartTimeMax" type="date">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">End date (min)</label>
+        <div class="col-md-10">
+            <input name="EndTimeMin" type="date">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">End date (min)</label>
+        <div class="col-md-10">
+            <input name="EndTimeMax" type="date">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Transportation type</label>
+        <div class="col-sm-10">
+            <select name="TransportationType" id="TransportationType">
+                @foreach (var type in Enum.GetValues(typeof(TransportationType)))
+                {
+                    <option value="@type">@type</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Arrangement type</label>
+        <div class="col-sm-10">
+            <select name="ArrangementType" id="ArrangementType">
+                @foreach (var type in Enum.GetValues(typeof(ArrangementType)))
+                {
+                    <option value="@type">@type</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Location (name)</label>
+        <div class="col-md-10">
+            <input name="Location" type="text">
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <button class="btn btn-success">Search</button>
+    </div>
+}

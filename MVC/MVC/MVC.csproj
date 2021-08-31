@@ -120,6 +120,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ArrangementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogInRegisterController.cs" />
     <Compile Include="GeneratorHelper.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\Reservation.cs" />
+    <Compile Include="Models\SearchModels\ArrangementSearchModel.cs" />
     <Compile Include="Models\StartLocation.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -169,13 +171,15 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\LogInRegister\Register.cshtml" />
     <Content Include="Views\LogInRegister\LogIn.cshtml" />
     <Content Include="Views\LogInRegister\Profile.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Arrangement\ArrangementList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Pictures\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <User>
-    <Username>milan</Username>
-    <Password>milan</Password>
-    <Name>milan</Name>
-    <Lastname>milan</Lastname>
+    <Username>admin</Username>
+    <Password>admin</Password>
+    <Name>admin</Name>
+    <Lastname>admin</Lastname>
     <Gender>Male</Gender>
-    <Email>milan@gmail.com</Email>
-    <DateOfBirth>2021-07-26T00:00:00</DateOfBirth>
+    <Email>admin@gmail.com</Email>
+    <DateOfBirth>1992-07-01T00:00:00</DateOfBirth>
+    <Role>Admin</Role>
+    <CreatedArrangemetsID />
+    <NumberOfCanceledTrips>0</NumberOfCanceledTrips>
+    <IsBaned>false</IsBaned>
+  </User>
+  <User>
+    <Username>manager</Username>
+    <Password>manager</Password>
+    <Name>Marija</Name>
+    <Lastname>Davidovac</Lastname>
+    <Gender>Female</Gender>
+    <Email>marijad@gmail.com</Email>
+    <DateOfBirth>1995-09-12T00:00:00</DateOfBirth>
+    <Role>Manager</Role>
+    <CreatedArrangemetsID>
+      <int>1</int>
+      <int>2</int>
+    </CreatedArrangemetsID>
+    <NumberOfCanceledTrips>0</NumberOfCanceledTrips>
+    <IsBaned>false</IsBaned>
+  </User>
+  <User>
+    <Username>Nemac44</Username>
+    <Password>Nemac44</Password>
+    <Name>Nemanja</Name>
+    <Lastname>Miljkovic</Lastname>
+    <Gender>Male</Gender>
+    <Email>nemacnemanja@gmail.com</Email>
+    <DateOfBirth>1999-01-24T00:00:00</DateOfBirth>
     <Role>Tourist</Role>
     <CreatedArrangemetsID />
     <NumberOfCanceledTrips>0</NumberOfCanceledTrips>

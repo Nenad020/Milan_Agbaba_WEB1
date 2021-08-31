@@ -1,2 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfAccommodation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<ArrayOfAccommodation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Accommodation>
+    <ID>1</ID>
+    <AccommodationType>Villa</AccommodationType>
+    <Name>Top Start Villa</Name>
+    <Stars>0</Stars>
+    <Pool>false</Pool>
+    <Spa>false</Spa>
+    <Disability>true</Disability>
+    <Wifi>true</Wifi>
+    <AccommodationUnitID>
+      <int>1</int>
+    </AccommodationUnitID>
+    <IsRemoved>false</IsRemoved>
+  </Accommodation>
+  <Accommodation>
+    <ID>2</ID>
+    <AccommodationType>Hotel</AccommodationType>
+    <Name>Luksor</Name>
+    <Stars>4</Stars>
+    <Pool>true</Pool>
+    <Spa>false</Spa>
+    <Disability>true</Disability>
+    <Wifi>true</Wifi>
+    <AccommodationUnitID>
+      <int>2</int>
+      <int>3</int>
+    </AccommodationUnitID>
+    <IsRemoved>false</IsRemoved>
+  </Accommodation>
+</ArrayOfAccommodation>

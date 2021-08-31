@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfStartLocation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<ArrayOfStartLocation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <StartLocation>
+    <ID>1</ID>
+    <Street>Bulevar Evrope</Street>
+    <Number>70</Number>
+    <City>Novi Sad</City>
+    <PostalCode>25000</PostalCode>
+    <Longitude>19.82023</Longitude>
+    <Latitude>45.24353</Latitude>
+    <IsRemoved>false</IsRemoved>
+  </StartLocation>
+</ArrayOfStartLocation>

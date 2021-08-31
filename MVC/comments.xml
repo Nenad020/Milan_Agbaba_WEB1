@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfComment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<ArrayOfComment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Comment>
+    <ID>1</ID>
+    <TouristUsername>Nemac44</TouristUsername>
+    <ArrangementID>2</ArrangementID>
+    <Text>Vreme je bilo odlicno svidelo mi se!</Text>
+    <Grade>5</Grade>
+    <IsApproved>false</IsApproved>
+  </Comment>
+</ArrayOfComment>

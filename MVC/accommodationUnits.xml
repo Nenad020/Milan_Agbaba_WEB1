@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAccommodationUnit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AccommodationUnit>
+    <ID>1</ID>
+    <NumberOfFreeRooms>15</NumberOfFreeRooms>
+    <NumberOfTotalRooms>15</NumberOfTotalRooms>
+    <Pets>true</Pets>
+    <Price>200</Price>
+    <IsRemoved>false</IsRemoved>
+  </AccommodationUnit>
+  <AccommodationUnit>
+    <ID>2</ID>
+    <NumberOfFreeRooms>5</NumberOfFreeRooms>
+    <NumberOfTotalRooms>5</NumberOfTotalRooms>
+    <Pets>false</Pets>
+    <Price>500</Price>
+    <IsRemoved>false</IsRemoved>
+  </AccommodationUnit>
+  <AccommodationUnit>
+    <ID>3</ID>
+    <NumberOfFreeRooms>20</NumberOfFreeRooms>
+    <NumberOfTotalRooms>20</NumberOfTotalRooms>
+    <Pets>false</Pets>
+    <Price>100</Price>
+    <IsRemoved>false</IsRemoved>
+  </AccommodationUnit>
+</ArrayOfAccommodationUnit>

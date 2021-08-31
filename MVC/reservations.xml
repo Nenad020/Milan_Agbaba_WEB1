@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfReservation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<ArrayOfReservation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Reservation>
+    <ID>Santorini_1</ID>
+    <TouristUsername>Nemac44</TouristUsername>
+    <ReservationStatus>Expired</ReservationStatus>
+    <ArrangementID>2</ArrangementID>
+    <AccommodationUnitID>2</AccommodationUnitID>
+    <IsRemoved>false</IsRemoved>
+  </Reservation>
+</ArrayOfReservation>
