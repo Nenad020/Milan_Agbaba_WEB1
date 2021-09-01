@@ -103,8 +103,11 @@ namespace MVC.Controllers
 				return View("Profile");
 			}
 
-			//Ocitavamo sve korisnike iz baze
+			//Ocitavamo sve korisnike, komentare i rezeravcije iz baze
 			LoadUsers();
+			LoadComments();
+			LoadReservations();
+
 
 			//Proveravamo da li je korisnik vec postoji u bazi sa datim kredencijalima
 			User exists = ReturnUser(OldUsername);
@@ -119,6 +122,12 @@ namespace MVC.Controllers
 				exists.DateOfBirth = user.DateOfBirth;
 				exists.Email = user.Email;
 			}
+
+			//Azuriramo komentare i rezervacije
+			UpdateTouristUsername(user, OldUsername);
+
+			//Sacuvamo izmene
+			SaveUsers();
 
 			//Ubacujemo korisnika u sesiju
 			System.Web.HttpContext.Current.Application["user"] = exists;
@@ -231,10 +240,6 @@ namespace MVC.Controllers
 		//Ova metoda se poziva kada turista promeni svoje korisnicno ime
 		private void UpdateTouristUsername(User user, string oldUsername)
 		{
-			//Ucitavaju se komentari i rezervatije
-			LoadComments();
-			LoadReservations();
-
 			foreach (var comment in comments)
 			{
 				//Ako turista koji je ostavio komentar odgovara sa turistom koji menja profil i koji je promeni korisnicko ime

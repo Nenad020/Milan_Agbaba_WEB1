@@ -1,0 +1,63 @@
+﻿@using MVC.Models
+@model IEnumerable<Comment>
+
+@{
+    ViewBag.Title = "CommentList";
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+
+    List<Comment> comments = (List<Comment>)HttpContext.Current.Application["comments"];
+    User user = (User)HttpContext.Current.Application["user"];
+}
+
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+
+<h2>CommentList</h2>
+
+@if (user != null && user.Role == Role.Tourist)
+{
+    <p>
+        @Html.ActionLink("Create New", "OpenCreatePage", "Comment")
+    </p>
+}
+
+<table class="table sortable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TouristUsername)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Grade)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in comments)
+{
+    if (item.IsApproved == true)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TouristUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade)
+            </td>
+        </tr>
+    }
+}
+</table>

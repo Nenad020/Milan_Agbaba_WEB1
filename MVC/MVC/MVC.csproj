@@ -123,6 +123,7 @@
     <Compile Include="Controllers\AccommodationController.cs" />
     <Compile Include="Controllers\AccommodationUnitController.cs" />
     <Compile Include="Controllers\ArrangementController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogInRegisterController.cs" />
     <Compile Include="GeneratorHelper.cs" />
@@ -181,6 +182,7 @@
     <Content Include="Views\Arrangement\ArrangementList.cshtml" />
     <Content Include="Views\Arrangement\Details.cshtml" />
     <Content Include="Views\Accommodation\Details.cshtml" />
+    <Content Include="Views\Comment\CommentList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

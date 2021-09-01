@@ -6,6 +6,6 @@
     <ArrangementID>2</ArrangementID>
     <Text>Vreme je bilo odlicno svidelo mi se!</Text>
     <Grade>5</Grade>
-    <IsApproved>false</IsApproved>
+    <IsApproved>true</IsApproved>
   </Comment>
 </ArrayOfComment>
