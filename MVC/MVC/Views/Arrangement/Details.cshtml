@@ -1,0 +1,165 @@
+﻿@using MVC.Models
+@model Arrangement
+
+@{
+    ViewBag.Title = "Details";
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+
+    Arrangement arrangement = (Arrangement)HttpContext.Current.Application["arrangement"];
+    StartLocation startLocation = (StartLocation)HttpContext.Current.Application["startLocation"];
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Arrangement</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.Label(arrangement.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Destination)
+        </dt>
+
+        <dd>
+            @Html.Label(arrangement.Destination)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDateOfArrangement)
+        </dt>
+
+        <dd>
+            @Html.Label(arrangement.StartDateOfArrangement.ToString())
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDateOfArrangement)
+        </dt>
+
+        <dd>
+            @Html.Label(arrangement.EndDateOfArrangement.ToString())
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+
+        <dd>
+            @Html.Label(arrangement.StartTime.ToString())
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfPassengers)
+        </dt>
+
+        <dd>
+            @Html.Label(arrangement.NumberOfPassengers.ToString())
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.Label(arrangement.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TravelProgram)
+        </dt>
+
+        <dd>
+            @Html.Label(arrangement.TravelProgram)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ArrangementType)
+        </dt>
+
+        <dd>
+            @Html.Label(arrangement.ArrangementType.ToString())
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransportationType)
+        </dt>
+
+        <dd>
+            @Html.Label(arrangement.TransportationType.ToString())
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PosterOfArrangement)
+        </dt>
+
+        <dd>
+            <img src="~/Content/Pictures/@arrangement.PosterOfArrangement" width="600" height="300" />
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <h4>Start location</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Label("Street")
+        </dt>
+        <dd>
+            @Html.Label(startLocation.Street)
+        </dd>
+
+        <dt>
+            @Html.Label("Number")
+        </dt>
+        <dd>
+            @Html.Label(startLocation.Number.ToString())
+        </dd>
+
+        <dt>
+            @Html.Label("City")
+        </dt>
+        <dd>
+            @Html.Label(startLocation.City)
+        </dd>
+
+        <dt>
+            @Html.Label("PostalCode")
+        </dt>
+        <dd>
+            @Html.Label(startLocation.PostalCode.ToString())
+        </dd>
+
+        <dt>
+            @Html.Label("Longitude")
+        </dt>
+        <dd>
+            @Html.Label(startLocation.Longitude.ToString())
+        </dd>
+
+        <dt>
+            @Html.Label("Latitude")
+        </dt>
+        <dd>
+            @Html.Label(startLocation.Latitude.ToString())
+        </dd>
+    </dl>
+</div>
+
+@Html.ActionLink("See accommodation", "OpenAccommodationListPage", "Accommodation", new { id = arrangement.ID }, "")

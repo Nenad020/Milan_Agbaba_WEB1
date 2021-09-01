@@ -10,6 +10,7 @@ namespace MVC.Controllers
     public class ArrangementController : Controller
     {
 		private List<Arrangement> arrangements = new List<Arrangement>();
+		private List<StartLocation> startLocations = new List<StartLocation>();
 
 		//Akcija koja otvara prozor u kome se nalaze svi aranzmani (prosli i buduci)
 		public ActionResult OpenArrangementsListPage()
@@ -39,6 +40,24 @@ namespace MVC.Controllers
 			System.Web.HttpContext.Current.Application["arrangements"] = output;
 
 			return View("ArrangementList");
+		}
+
+		//Akcija koja otvara stranicu sa detaljima za aranzman
+		public ActionResult Details(int id)
+		{
+			//Ocitavamo sve aranzmane i pocetne lokacije iz baze
+			LoadArrangements();
+			LoadStartLocations();
+
+			//Trazimo odgovarajuci aranzman i pocetnu lokaciju
+			Arrangement arrangement = GetArrangement(id);
+			StartLocation startLocation = GetStartLocaiton(arrangement.StartLocationID);
+
+			//Ubacujemo aranzman i pocetnu lokaciju u sesiju
+			System.Web.HttpContext.Current.Application["arrangement"] = arrangement;
+			System.Web.HttpContext.Current.Application["startLocation"] = startLocation;
+
+			return View("Details");
 		}
 
 		//Metoda koja vrsi pretragu aranzmana
@@ -133,6 +152,48 @@ namespace MVC.Controllers
 		private void LoadArrangements()
 		{
 			arrangements = XMLHelper.LoadArrangements();
+		}
+
+		//Ucitavamo podatke iz baze i upisujemo u listu
+		private void LoadStartLocations()
+		{
+			startLocations = XMLHelper.LoadStartLocations();
+		}
+
+		//Trazi se aranzman iz liste na osnovu idija
+		private Arrangement GetArrangement(int id)
+		{
+			//Prolazimo kroz sve aranzmane
+			foreach (var arrangement in arrangements)
+			{
+				//Ako je id arazmana isti kao onaj u parametru
+				if (arrangement.ID == id)
+				{
+					//Nasli smo ga
+					return arrangement;
+				}
+			}
+
+			//Ako ga nismo nasli, baci null
+			return null;
+		}
+
+		//Trazi se pocetna lokacija iz liste na osnovu idija
+		private StartLocation GetStartLocaiton(int id)
+		{
+			//Prolazimo kroz sve pocetne lokacije
+			foreach (var startLocation in startLocations)
+			{
+				//Ako je id pocetne lokacije isti kao onaj u parametru
+				if (startLocation.ID == id)
+				{
+					//Nasli smo ga
+					return startLocation;
+				}
+			}
+
+			//Ako ga nismo nasli, baci null
+			return null;
 		}
 	}
 }

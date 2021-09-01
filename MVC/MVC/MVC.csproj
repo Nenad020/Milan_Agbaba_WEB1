@@ -120,6 +120,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccommodationController.cs" />
+    <Compile Include="Controllers\AccommodationUnitController.cs" />
     <Compile Include="Controllers\ArrangementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogInRegisterController.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\Reservation.cs" />
+    <Compile Include="Models\SearchModels\AccommodationUnitSearchModel.cs" />
     <Compile Include="Models\SearchModels\ArrangementSearchModel.cs" />
     <Compile Include="Models\StartLocation.cs" />
     <Compile Include="Models\User.cs" />
@@ -176,10 +179,13 @@
     <Content Include="Views\LogInRegister\Profile.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Arrangement\ArrangementList.cshtml" />
+    <Content Include="Views\Arrangement\Details.cshtml" />
+    <Content Include="Views\Accommodation\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Pictures\" />
+    <Folder Include="Views\AccommodationUnit\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
