@@ -13,6 +13,7 @@ namespace MVC.Controllers
 		private List<Comment> comments = new List<Comment>();
 		private List<Reservation> reservations = new List<Reservation>();
 
+		#region Akcije
 		//Otvara se prozor za registraciju korisnika
 		public ActionResult OpenRegisterPage()
         {
@@ -145,7 +146,9 @@ namespace MVC.Controllers
 			//I otvaramo akciju za ispis aktivnih aranzmana na pocetnoj stranici
 			return RedirectToAction("../Home/Index");
 		}
+		#endregion
 
+		#region Pomocne funkcije
 		//Vrsi se provera da li korisnik postoji u listi korisnika
 		private bool CheckIfUserExists(string username)
 		{
@@ -201,42 +204,6 @@ namespace MVC.Controllers
 			return null;
 		}
 
-		//Ucitavamo podatke iz baze i upisujemo u listu
-		private void LoadUsers()
-		{
-			users = XMLHelper.LoadUsers();
-		}
-
-		//Listu korisnika upisujemo u bazu
-		private void SaveUsers()
-		{
-			XMLHelper.SaveUsers(users);
-		}
-
-		//Ucitavamo podatke iz baze i upisujemo u listu
-		private void LoadComments()
-		{
-			comments = XMLHelper.LoadComments();
-		}
-
-		//Listu komentara upisujemo u bazu
-		private void SaveComments()
-		{
-			XMLHelper.SaveComments(comments);
-		}
-
-		//Ucitavamo podatke iz baze i upisujemo u listu
-		private void LoadReservations()
-		{
-			reservations = XMLHelper.LoadReservations();
-		}
-
-		//Listu rezervacija upisujemo u bazu
-		private void SaveReservations()
-		{
-			XMLHelper.SaveReservations(reservations);
-		}
-
 		//Ova metoda se poziva kada turista promeni svoje korisnicno ime
 		private void UpdateTouristUsername(User user, string oldUsername)
 		{
@@ -263,5 +230,50 @@ namespace MVC.Controllers
 			SaveComments();
 			SaveReservations();
 		}
+		#endregion
+
+		#region Load funkcije
+
+		//Ucitavamo podatke iz baze i upisujemo u listu
+		private void LoadUsers()
+		{
+			users = XMLHelper.LoadUsers();
+		}
+
+		//Ucitavamo podatke iz baze i upisujemo u listu
+		private void LoadComments()
+		{
+			comments = XMLHelper.LoadComments();
+		}
+
+		//Ucitavamo podatke iz baze i upisujemo u listu
+		private void LoadReservations()
+		{
+			reservations = XMLHelper.LoadReservations();
+		}
+
+		#endregion
+
+		#region Save funkcije
+
+		//Listu korisnika upisujemo u bazu
+		private void SaveUsers()
+		{
+			XMLHelper.SaveUsers(users);
+		}
+		
+		//Listu komentara upisujemo u bazu
+		private void SaveComments()
+		{
+			XMLHelper.SaveComments(comments);
+		}       
+		
+		//Listu rezervacija upisujemo u bazu
+		private void SaveReservations()
+		{
+			XMLHelper.SaveReservations(reservations);
+		}
+
+		#endregion
 	}
 }

@@ -12,6 +12,7 @@ namespace MVC.Controllers
 		private List<Arrangement> arrangements = new List<Arrangement>();
 		private List<StartLocation> startLocations = new List<StartLocation>();
 
+		#region Akcije
 		//Akcija koja otvara prozor u kome se nalaze svi aranzmani (prosli i buduci)
 		public ActionResult OpenArrangementsListPage()
 		{
@@ -59,7 +60,9 @@ namespace MVC.Controllers
 
 			return View("Details");
 		}
+		#endregion
 
+		#region Pomocne funkcije
 		//Metoda koja vrsi pretragu aranzmana
 		private List<Arrangement> SearchArrangementsPrivate(List<Arrangement> arrangements, ArrangementSearchModel searchModel)
 		{
@@ -147,7 +150,9 @@ namespace MVC.Controllers
 
 			return output;
 		}
+		#endregion
 
+		#region Load funkcije
 		//Ucitavamo podatke iz baze i upisujemo u listu
 		private void LoadArrangements()
 		{
@@ -159,7 +164,9 @@ namespace MVC.Controllers
 		{
 			startLocations = XMLHelper.LoadStartLocations();
 		}
+		#endregion
 
+		#region Get funkcije
 		//Trazi se aranzman iz liste na osnovu idija
 		private Arrangement GetArrangement(int id)
 		{
@@ -195,5 +202,6 @@ namespace MVC.Controllers
 			//Ako ga nismo nasli, baci null
 			return null;
 		}
+		#endregion
 	}
 }

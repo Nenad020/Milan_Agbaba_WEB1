@@ -11,6 +11,7 @@ namespace MVC.Controllers
     {
 		private List<AccommodationUnit> accommodationUnits = new List<AccommodationUnit>();
 
+		#region Akcije
 		//Akcija sluzi za pretragu smestajnih jedinica
 		public ActionResult SearchAccommodationUnits(AccommodationUnitSearchModel searchModel)
 		{
@@ -35,7 +36,9 @@ namespace MVC.Controllers
 
 			return View("../Accommodation/Details");
 		}
+		#endregion
 
+		#region Pomocne funkcije
 		private List<AccommodationUnit> SearchAccommodationUnitsPrivate(List<AccommodationUnit> accommodationUnits, AccommodationUnitSearchModel searchModel)
 		{
 			List<AccommodationUnit> output = new List<AccommodationUnit>();
@@ -88,13 +91,17 @@ namespace MVC.Controllers
 
 			return output;
 		}
+		#endregion
 
+		#region Load funkcije
 		//Ucitavamo podatke iz baze i upisujemo u listu
 		private void LoadAccommodationUnits()
 		{
 			accommodationUnits = XMLHelper.LoadAccommodationUnits();
 		}
+		#endregion
 
+		#region Get funkcije
 		//Trazi se smestajna jedinica iz liste na osnovu idija
 		private AccommodationUnit GetAccommodationUnit(int id)
 		{
@@ -112,5 +119,6 @@ namespace MVC.Controllers
 			//Ako ga nismo nasli, baci null
 			return null;
 		}
+		#endregion
 	}
 }

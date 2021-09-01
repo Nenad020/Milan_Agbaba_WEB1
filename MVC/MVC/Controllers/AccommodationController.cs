@@ -13,6 +13,7 @@ namespace MVC.Controllers
 		private List<Accommodation> accommodations = new List<Accommodation>();
 		private List<AccommodationUnit> accommodationUnits = new List<AccommodationUnit>();
 
+		#region Akcije
 		//Akcija koja otvara prozor sa detaljima smestaja i njegovih smestajnih jedinica
 		public ActionResult OpenAccommodationListPage(int id)
 		{
@@ -38,7 +39,9 @@ namespace MVC.Controllers
 
 			return View("Details");
 		}
+		#endregion
 
+		#region Load funkcije
 		//Ucitavamo podatke iz baze i upisujemo u listu
 		private void LoadArrangements()
 		{
@@ -56,7 +59,9 @@ namespace MVC.Controllers
 		{
 			accommodationUnits = XMLHelper.LoadAccommodationUnits();
 		}
+		#endregion
 
+		#region Get funkcije
 		//Trazi se aranzman iz liste na osnovu idija
 		private Arrangement GetArrangement(int id)
 		{
@@ -110,5 +115,6 @@ namespace MVC.Controllers
 			//Ako ga nismo nasli, baci null
 			return null;
 		}
+		#endregion
 	}
 }

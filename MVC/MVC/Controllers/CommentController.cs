@@ -14,6 +14,7 @@ namespace MVC.Controllers
 		private List<Reservation> reservations = new List<Reservation>();
 		private List<AccommodationUnit> accommodationUnits = new List<AccommodationUnit>();
 
+		#region Akcije
 		//Akcija koja otvara prozor za ispis svih komentara za izabrani aranzman
 		public ActionResult ArrangmentComments(int id)
 		{
@@ -74,7 +75,9 @@ namespace MVC.Controllers
 
 			return View("CommentList");
 		}
+		#endregion
 
+		#region Load funkcije
 		//Ucitavamo podatke iz baze i upisujemo u listu
 		private void LoadArrangements()
 		{
@@ -92,7 +95,9 @@ namespace MVC.Controllers
 		{
 			reservations = XMLHelper.LoadReservations();
 		}
+		#endregion
 
+		#region Save funkcije
 		//Listu rezervacija upisujemo u bazu
 		private void SaveReservations()
 		{
@@ -110,7 +115,9 @@ namespace MVC.Controllers
 		{
 			accommodationUnits = XMLHelper.LoadAccommodationUnits();
 		}
+		#endregion
 
+		#region Get funkcije
 		//Trazi se smestajna jedinica iz liste na osnovu idija
 		private AccommodationUnit GetAccommodationUnit(int id)
 		{
@@ -182,7 +189,9 @@ namespace MVC.Controllers
 			//Ako ga nismo nasli, baci null
 			return null;
 		}
+		#endregion
 
+		#region Pomocne funkcije
 		//Funkcija koja utvrdjuje da li je rezervacija istekla
 		private void UpdateReservationStatus(Reservation reservation)
 		{
@@ -221,5 +230,6 @@ namespace MVC.Controllers
 			//Cuvaju se izmene
 			SaveAccommodationUnits();
 		}
+		#endregion
 	}
 }
