@@ -183,6 +183,7 @@
     <Content Include="Views\Arrangement\Details.cshtml" />
     <Content Include="Views\Accommodation\Details.cshtml" />
     <Content Include="Views\Comment\CommentList.cshtml" />
+    <Content Include="Views\Comment\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

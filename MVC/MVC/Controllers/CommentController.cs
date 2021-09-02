@@ -38,7 +38,8 @@ namespace MVC.Controllers
 				}
 			}
 
-			//Ubacujemo aranzmane u sesiju
+			//Ubacujemo aranzman i komentare u sesiju
+			System.Web.HttpContext.Current.Application["arrangement"] = arrangement;
 			System.Web.HttpContext.Current.Application["comments"] = output;
 
 			return View("CommentList");
@@ -75,6 +76,43 @@ namespace MVC.Controllers
 
 			return View("CommentList");
 		}
+
+		//Akcija koja vrsi dodavanje novog komentara
+		public ActionResult Create(Comment comment)
+		{
+			//Vrsi se validacija unetih vrednosti
+			bool validate = comment.Validate();
+			if (validate == false)
+			{
+				ViewBag.Message = "Input fields can't be empty!";
+				return View();
+			}
+
+			//Ocitavamo sve komentare iz baze
+			LoadComments();
+
+			//Ucitavamo korisnika i aranzman iz sesije
+			User user = (User)System.Web.HttpContext.Current.Application["user"];
+			Arrangement arrangement = (Arrangement)System.Web.HttpContext.Current.Application["arrangement"];
+
+			//Uzimamo id od arazmana i dodeljujemo ga komentaru
+			comment.ArrangementID = arrangement.ID;
+
+			//Uzimamo korisnicko ime turiste i doduljemo ga komentaru
+			comment.TouristUsername = user.Username;
+
+			//Generisemo novi id za komentar
+			comment.GenerateID();
+
+			//Dodajemo komentar u listu
+			comments.Add(comment);
+
+			//Sacuvamo u bazu
+			SaveComments();
+
+			//Pozovemo view za Logovanje korisnika
+			return View("CommentList");
+		}
 		#endregion
 
 		#region Load funkcije
@@ -95,6 +133,12 @@ namespace MVC.Controllers
 		{
 			reservations = XMLHelper.LoadReservations();
 		}
+
+		//Ucitavamo podatke iz baze i upisujemo u listu
+		private void LoadAccommodationUnits()
+		{
+			accommodationUnits = XMLHelper.LoadAccommodationUnits();
+		}
 		#endregion
 
 		#region Save funkcije
@@ -110,10 +154,10 @@ namespace MVC.Controllers
 			XMLHelper.SaveAccommodationUnits(accommodationUnits);
 		}
 
-		//Ucitavamo podatke iz baze i upisujemo u listu
-		private void LoadAccommodationUnits()
+		//Listu komentara upisujemo u bazu
+		private void SaveComments()
 		{
-			accommodationUnits = XMLHelper.LoadAccommodationUnits();
+			XMLHelper.SaveComments(comments);
 		}
 		#endregion
 

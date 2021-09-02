@@ -8,4 +8,12 @@
     <Grade>5</Grade>
     <IsApproved>true</IsApproved>
   </Comment>
+  <Comment>
+    <ID>852758</ID>
+    <TouristUsername>Nemac44</TouristUsername>
+    <ArrangementID>2</ArrangementID>
+    <Text>sadf</Text>
+    <Grade>3</Grade>
+    <IsApproved>false</IsApproved>
+  </Comment>
 </ArrayOfComment>
