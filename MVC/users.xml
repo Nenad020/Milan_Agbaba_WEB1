@@ -42,4 +42,17 @@
     <NumberOfCanceledTrips>0</NumberOfCanceledTrips>
     <IsBaned>false</IsBaned>
   </User>
+  <User>
+    <Username>manager2</Username>
+    <Password>manager2</Password>
+    <Name>manager2</Name>
+    <Lastname>manager2</Lastname>
+    <Gender>Male</Gender>
+    <Email>manager2</Email>
+    <DateOfBirth>2021-09-01T00:00:00</DateOfBirth>
+    <Role>Manager</Role>
+    <CreatedArrangemetsID />
+    <NumberOfCanceledTrips>0</NumberOfCanceledTrips>
+    <IsBaned>false</IsBaned>
+  </User>
 </ArrayOfUser>

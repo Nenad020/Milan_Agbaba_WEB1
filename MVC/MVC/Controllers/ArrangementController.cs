@@ -60,6 +60,32 @@ namespace MVC.Controllers
 
 			return View("Details");
 		}
+
+		//Akcija koja otvara stranicu gde se nalaze svi aranzmani koje je ulogovani menadzer kreirao
+		public ActionResult OpenManagerArrangementsListPage()
+		{
+			//Ocitavamo sve aranzmane iz baze
+			LoadArrangements();
+
+			//Vadimo korisnika iz sesija i pravimo praznu listu aranzmana
+			User user = (User)System.Web.HttpContext.Current.Application["user"];
+			List<Arrangement> output = new List<Arrangement>();
+
+			//Prolazimo kroz sve menadzerove aranzmane
+			foreach (var arrangementID in user.CreatedArrangemetsID)
+			{
+				//Na osnovu idija dobijamo ceo objekat aranzmana
+				Arrangement item = GetArrangement(arrangementID);
+
+				//I ubacujemo ga u listu
+				output.Add(item);
+			}
+
+			//Listu aranzmana ubacujemo u sesiju
+			System.Web.HttpContext.Current.Application["arrangements"] = output;
+
+			return View("ManagerArrangemetsList");
+		}
 		#endregion
 
 		#region Pomocne funkcije

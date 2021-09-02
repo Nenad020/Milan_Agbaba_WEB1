@@ -2,7 +2,7 @@
 @model IEnumerable<Arrangement>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ManagerArrangemetsList";
 
     if (ViewBag.Message != null)
     {
@@ -18,11 +18,14 @@
     User user = (User)HttpContext.Current.Application["user"];
 }
 
-<h2>Arrangements</h2>
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 
-@Html.ActionLink("See all arrangements", "OpenArrangementsListPage", "Arrangement")
+<h2>Manager Arrangemets List</h2>
 
-<table class="table">
+<p>
+    @Html.ActionLink("Create New", "OpenCreatePage", "Arrangement")
+</p>
+<table class="table sortable">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -41,7 +44,7 @@
 
 @foreach (var item in arrangements)
 {
-    if (item.StartDateOfArrangement > DateTime.Now && item.IsRemoved == false)
+    if (item.IsRemoved == false)
     {
         <tr>
             <td>
@@ -57,29 +60,11 @@
                 <img src="~/Content/Pictures/@item.PosterOfArrangement" width="200" height="100" />
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", "Arrangement", new { id = item.ID }, "") |
-
-                @if(user != null && user.Role == Role.Tourist)
-                {
-                    @Html.ActionLink("Make a reservation", "OpenReservationPage", "Reservation", new { id = item.ID }, "")
-                }
+                @Html.ActionLink("Edit", "OpenEditPage", "Arrangement", new { id = item.ID }, "") |
+                @Html.ActionLink("Delete", "Delete", "Arrangement", new { id = item.ID }, "")
             </td>
         </tr>
     }
 }
-</table>
 
-@if (user != null && user.Role == Role.Manager)
-{
-    @Html.ActionLink("See manager arrangements", "OpenManagerArrangementsListPage", "Arrangement")
-    <br>
-    @Html.ActionLink("See manager accommodations", "OpenManagerAccommodationsListPage", "Accommodation")
-    <br>
-    @Html.ActionLink("See manager accommodation units", "OpenManagerAccommodationUnitsListPage", "AccommodationUnit")
-    <br>
-    @Html.ActionLink("See manager start locations", "OpenManagerStartLocationsListPage", "StartLocation")
-    <br>
-    @Html.ActionLink("See manager reservations", "OpenManagerReservationsListPage", "Reservation")
-    <br>
-    @Html.ActionLink("See manager comments", "OpenManagerCommentsListPage", "Comments")
-}
+</table>
