@@ -82,7 +82,7 @@ namespace MVC.Models
 		{
 			if (Name == null || Name == "" || Destination == null || Destination == "" || StartDateOfArrangement == null || EndDateOfArrangement == null || 
 				StartLocationID <= 0 || StartTime == null || NumberOfPassengers <= 0 || Description == null || Description == "" || TravelProgram == null || 
-				TravelProgram == "" || PosterOfArrangement == null || PosterOfArrangement == "" || AccommodationID <= 0)
+				TravelProgram == "" || AccommodationID <= 0)
 			{
 				return false;
 			}

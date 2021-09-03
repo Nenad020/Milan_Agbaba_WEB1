@@ -185,6 +185,7 @@
     <Content Include="Views\Comment\CommentList.cshtml" />
     <Content Include="Views\Comment\Create.cshtml" />
     <Content Include="Views\Arrangement\ManagerArrangemetsList.cshtml" />
+    <Content Include="Views\Arrangement\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

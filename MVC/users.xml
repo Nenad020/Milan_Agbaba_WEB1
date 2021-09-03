@@ -51,7 +51,9 @@
     <Email>manager2</Email>
     <DateOfBirth>2021-09-01T00:00:00</DateOfBirth>
     <Role>Manager</Role>
-    <CreatedArrangemetsID />
+    <CreatedArrangemetsID>
+      <int>961892</int>
+    </CreatedArrangemetsID>
     <NumberOfCanceledTrips>0</NumberOfCanceledTrips>
     <IsBaned>false</IsBaned>
   </User>

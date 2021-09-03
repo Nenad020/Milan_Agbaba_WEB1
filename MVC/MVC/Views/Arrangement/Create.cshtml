@@ -1,0 +1,136 @@
+﻿@using MVC.Models
+@model Arrangement
+
+@{
+    ViewBag.Title = "Create";
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+
+    List<Accommodation> accommodations = (List<Accommodation>)HttpContext.Current.Application["accommodations"];
+    List<StartLocation> startLocations = (List<StartLocation>)HttpContext.Current.Application["startLocations"];
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Arrangement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Arrangement</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Destination, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Destination, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Destination, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">StartDateOfArrangement</label>
+            <div class="col-md-10">
+                <input type="date" class="form-control" name="StartDateOfArrangement">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">EndDateOfArrangement</label>
+            <div class="col-md-10">
+                <input type="date" class="form-control" name="EndDateOfArrangement">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Start location</label>
+            <div class="col-md-10">
+                <select name="StartLocationID" id="StartLocationID" class="form-control">
+                    @foreach (var startLocation in startLocations)
+                    {
+                        if (startLocation.IsRemoved == false)
+                        {
+                            string name = startLocation.City + " " + startLocation.Street + " " + startLocation.Number;
+                            <option class="form-control" value="@startLocation.ID">@name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Start time</label>
+            <div class="col-md-10">
+                <input type="time" class="form-control" name="StartTime" id="StartTime">
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NumberOfPassengers, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NumberOfPassengers, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NumberOfPassengers, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TravelProgram, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TravelProgram, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TravelProgram, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Poster</label>
+            <div class="col-md-10">
+                <input type="file" class="form-control" id="poster" name="poster">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Accommodation</label>
+            <div class="col-md-10">
+                <select name="AccommodationID" id="AccommodationID" class="form-control">
+                    @foreach (var accommodation in accommodations)
+                    {
+                        if (accommodation.IsRemoved == false)
+                        {
+                            <option class="form-control" value="@accommodation.ID">@accommodation.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
