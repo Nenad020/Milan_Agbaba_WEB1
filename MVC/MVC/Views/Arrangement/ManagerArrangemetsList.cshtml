@@ -66,5 +66,70 @@
         </tr>
     }
 }
-
 </table>
+
+@using (Html.BeginForm("SearchManagerArrangements", "Arrangement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group row">
+        <label class="control-label col-md-2">Start date (min)</label>
+        <div class="col-md-10">
+            <input name="StartTimeMin" type="date">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Start date (max)</label>
+        <div class="col-md-10">
+            <input name="StartTimeMax" type="date">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">End date (min)</label>
+        <div class="col-md-10">
+            <input name="EndTimeMin" type="date">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">End date (min)</label>
+        <div class="col-md-10">
+            <input name="EndTimeMax" type="date">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Transportation type</label>
+        <div class="col-sm-10">
+            <select name="TransportationType" id="TransportationType">
+                @foreach (var type in Enum.GetValues(typeof(TransportationType)))
+                {
+                    <option value="@type">@type</option>
+}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Arrangement type</label>
+        <div class="col-sm-10">
+            <select name="ArrangementType" id="ArrangementType">
+                @foreach (var type in Enum.GetValues(typeof(ArrangementType)))
+                {
+                    <option value="@type">@type</option>
+}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Location (name)</label>
+        <div class="col-md-10">
+            <input name="Location" type="text">
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <button class="btn btn-success">Search</button>
+    </div>
+}

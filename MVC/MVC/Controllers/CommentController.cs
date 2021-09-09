@@ -85,7 +85,7 @@ namespace MVC.Controllers
 			if (validate == false)
 			{
 				ViewBag.Message = "Input fields can't be empty!";
-				return View();
+				return View("Create");
 			}
 
 			//Ocitavamo sve komentare iz baze

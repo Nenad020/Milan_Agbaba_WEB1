@@ -13,6 +13,7 @@ namespace MVC.Controllers
 		private List<Arrangement> arrangements = new List<Arrangement>();
 		private List<StartLocation> startLocations = new List<StartLocation>();
 		private List<Accommodation> accommodations = new List<Accommodation>();
+		private List<Reservation> reservations = new List<Reservation>();
 		private List<User> users = new List<User>();
 
 		#region Akcije
@@ -112,7 +113,7 @@ namespace MVC.Controllers
 			if (validate == false)
 			{
 				ViewBag.Message = "Input fields can't be empty!";
-				return View();
+				return View("Create");
 			}
 
 			//Ocitavamo sve aranzmane iz baze
@@ -140,16 +141,18 @@ namespace MVC.Controllers
 			//Sacuvamo izmene
 			SaveArrangements();
 
-			//U sesiju dodamo korisnika i aranzmane
+			//U sesiju dodamo korisnika
 			System.Web.HttpContext.Current.Application["user"] = user;
-			System.Web.HttpContext.Current.Application["arrangements"] = arrangements;
 
 			return RedirectToAction("OpenManagerArrangementsListPage");
 		}
 
 		//Akcija koja otvara prozor za modifikaciju izabranog aranzmana
-		public ActionResult OpenUpdatePage(int id)
+		public ActionResult OpenEditPage(int id)
 		{
+			//Ocitavamo sve aranzmane iz baze
+			LoadArrangements();
+
 			//Trazimo aranzman iz baze na osnovu idija
 			Arrangement arrangement = GetArrangement(id);
 
@@ -158,7 +161,7 @@ namespace MVC.Controllers
 			if (canModify == false)
 			{
 				ViewBag.Message = "Arrangement has expired, you can't update it!";
-				return View();
+				return View("ManagerArrangemetsList");
 			}
 
 			//Ucitavamo pocetne lokacije i smestaje iz baze
@@ -170,7 +173,121 @@ namespace MVC.Controllers
 			System.Web.HttpContext.Current.Application["startLocations"] = startLocations;
 			System.Web.HttpContext.Current.Application["accommodations"] = accommodations;
 
-			return View("Update");
+			return View("Edit");
+		}
+
+		//Akcija koja vrsi azuriranje aranzmana
+		public ActionResult Edit(int ID, Arrangement arrangement, HttpPostedFileBase poster)
+		{
+			//Vrsi se validacija unetih vrednosti
+			bool validate = arrangement.Validate();
+			if (validate == false)
+			{
+				ViewBag.Message = "Input fields can't be empty!";
+				return View("Edit");
+			}
+
+			//Ocitavamo sve aranzmane iz baze
+			LoadArrangements();
+
+			//Trazimo putanju fajla kojeg smo ucitali kroz prozor i sacuvamo taj fajl na lokaciji
+			string path = Path.Combine(Server.MapPath("~/Content/Pictures"), Path.GetFileName(poster.FileName));
+			poster.SaveAs(path);
+
+			//Proveravamo da li je aranzmana postoji u bazi
+			Arrangement exists = GetArrangement(ID);
+			if (exists != null)
+			{
+				//Azuriramo podatke
+				exists.StartDateOfArrangement = arrangement.StartDateOfArrangement;
+				exists.EndDateOfArrangement = arrangement.EndDateOfArrangement;
+				exists.ArrangementType = arrangement.ArrangementType;
+				exists.NumberOfPassengers = arrangement.NumberOfPassengers;
+				exists.Description = arrangement.Description;
+				exists.Destination = arrangement.Destination;
+				exists.Name = arrangement.Name;
+				exists.StartLocationID = arrangement.StartLocationID;
+				exists.StartTime = arrangement.StartTime;
+				exists.TransportationType = arrangement.TransportationType;
+				exists.TravelProgram = arrangement.TravelProgram;
+				exists.PosterOfArrangement = poster.FileName;
+				exists.AccommodationID = arrangement.AccommodationID;
+			}
+
+			//Sacuvamo izmene
+			SaveArrangements();
+
+			//I otvaramo akciju za ispis menadzerovih aranzmana
+			return RedirectToAction("OpenManagerArrangementsListPage");
+		}
+
+		//Akcija koja vrsi brisanje aranzmana
+		public ActionResult Delete(int id)
+		{
+			//Ocitavamo sve aranzmane i rezervacije iz baze
+			LoadArrangements();
+			LoadReservations();
+
+			//Trazimo aranzman iz baze na osnovu idija
+			Arrangement arrangement = GetArrangement(id);
+
+			//Proveravamo da li mozemo da izvrsimo brisanje
+			bool canDelete = CheckIfArrangementIsExpired(arrangement);
+			if (canDelete == false)
+			{
+				ViewBag.Message = "Arrangement has expired, you can't delete it!";
+				return View("ManagerArrangemetsList");
+			}
+			
+			//Prolazimo kroz svaku rezervaciju
+			foreach (var reservation in reservations)
+			{
+				//Proveravamo da li ID aranzmana odgovara sa ID-ijem u rezervaciji
+				//i proveravamo da li je rezervacija trenutno aktivna
+				if (reservation.ArrangementID == id && reservation.ReservationStatus == ReservationStatus.Active)
+				{
+					//Ako jeste ispisujemo poruku greske
+					ViewBag.Message = "Arrangement has expired, you can't delete it!";
+					return View("ManagerArrangemetsList");
+				}
+			}
+
+			//Logicki brisemo
+			arrangement.IsRemoved = true;
+
+			//Cuvamo podatke
+			SaveArrangements();
+
+			return RedirectToAction("OpenManagerArrangementsListPage");
+		}
+
+		//Akcija koja vrsi pretragu aranzmana nekog menadzera tj njegovim aranzmana
+		public ActionResult SearchManagerArrangements(ArrangementSearchModel searchModel)
+		{
+			//Ocitavamo sve aranzmane iz baze
+			LoadArrangements();
+
+			//Vadimo korisnika iz sesije
+			User user = (User)System.Web.HttpContext.Current.Application["user"];
+
+			//Pravimo listu aranzmana
+			List<Arrangement> arrangements2 = new List<Arrangement>();
+
+			//Prolazimo kroz listu menadzerovim aranzmana, ali to su samo idijevi
+			foreach (var arrangement in user.CreatedArrangemetsID)
+			{
+				//Izvlacimo aranzman na osnovu idija i ubacujemo ga u listu
+				Arrangement item = GetArrangement(arrangement);
+				arrangements2.Add(item);
+			}
+
+			//Pozivamo funkciju za pretragu
+			List<Arrangement> output = SearchArrangementsPrivate(arrangements2, searchModel);
+
+			//Ubacujemo aranzmane u sesiju
+			System.Web.HttpContext.Current.Application["arrangements"] = output;
+
+			return View("ManagerArrangemetsList");
 		}
 		#endregion
 
@@ -315,6 +432,12 @@ namespace MVC.Controllers
 		{
 			users = XMLHelper.LoadUsers();
 		}
+
+		//Ucitavamo podatke iz baze i upisujemo u listu
+		private void LoadReservations()
+		{
+			reservations = XMLHelper.LoadReservations();
+		}
 		#endregion
 
 		#region Get funkcije
@@ -389,6 +512,24 @@ namespace MVC.Controllers
 			//Ako ga nismo nasli, baci null
 			return null;
 		}
+
+		//Trazi se rezervacija iz liste na osnovu idija
+		private Reservation GetReservation(string id)
+		{
+			//Prolazimo kroz sve reservacije
+			foreach (var reservation in reservations)
+			{
+				//Ako je id rezervacije isti kao onaj u parametru
+				if (reservation.ID == id)
+				{
+					//Nasli smo ga
+					return reservation;
+				}
+			}
+
+			//Ako ga nismo nasli, baci null
+			return null;
+		}
 		#endregion
 
 		#region Save funkcije
@@ -402,6 +543,12 @@ namespace MVC.Controllers
 		private void SaveArrangements()
 		{
 			XMLHelper.SaveArrangements(arrangements);
+		}
+
+		//Listu rezervacija upisujemo u bazu
+		private void SaveReservations()
+		{
+			XMLHelper.SaveReservations(reservations);
 		}
 		#endregion
 	}

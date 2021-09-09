@@ -28,7 +28,7 @@ namespace MVC.Controllers
 			if (validate == false)
 			{
 				ViewBag.Message = "Input fields can't be empty!";
-				return View();
+				return View("Register");
 			}
 
 			//Ocitavamo sve korisnike iz baze
@@ -39,7 +39,7 @@ namespace MVC.Controllers
 			if (exists == true)
 			{
 				ViewBag.Message = "User with username: " + user.Username + " already exists!";
-				return View();
+				return View("Register");
 			}
 
 			//Dodajemo korisnika u listu
@@ -66,7 +66,7 @@ namespace MVC.Controllers
 			if (validate == false)
 			{
 				ViewBag.Message = "Input fields can't be empty!";
-				return View();
+				return View("LogIn");
 			}
 
 			//Ocitavamo sve korisnike iz baze
@@ -77,7 +77,7 @@ namespace MVC.Controllers
 			if (exists == null)
 			{
 				ViewBag.Message = "User with username: " + user.Username + " doesn't exists!";
-				return View();
+				return View("LogIn");
 			}
 
 			//Ubacujemo korisnika u sesiju
@@ -108,7 +108,6 @@ namespace MVC.Controllers
 			LoadUsers();
 			LoadComments();
 			LoadReservations();
-
 
 			//Proveravamo da li je korisnik vec postoji u bazi sa datim kredencijalima
 			User exists = ReturnUser(OldUsername);
@@ -266,7 +265,7 @@ namespace MVC.Controllers
 		private void SaveComments()
 		{
 			XMLHelper.SaveComments(comments);
-		}       
+		}
 		
 		//Listu rezervacija upisujemo u bazu
 		private void SaveReservations()

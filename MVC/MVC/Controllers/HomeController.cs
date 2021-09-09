@@ -22,7 +22,7 @@ namespace MVC.Controllers
 			//Ubacujemo aranzmane u sesiju
 			System.Web.HttpContext.Current.Application["arrangements"] = arrangements;
 
-			return View();
+			return View("Index");
 		}
 
 		//Ucitavamo podatke iz baze i upisujemo u listu
