@@ -1,0 +1,153 @@
+﻿@using MVC.Models
+@model IEnumerable<Accommodation>
+
+@{
+    ViewBag.Title = "ManagerAccommodationsList";
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+    
+    List<Accommodation> accommodations = (List<Accommodation>)HttpContext.Current.Application["accommodations"];
+}
+
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+
+<h2>ManagerAccommodationsList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "OpenCreatePage", "Accommodation")
+</p>
+<table class="table sortable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stars)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pool)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Spa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Disability)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Wifi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsRemoved)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in accommodations)
+{
+    if (item.IsRemoved == false)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stars)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pool)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Spa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Disability)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wifi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsRemoved)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "OpenEditPage", "Accommodation", new { id = item.ID }, "") |
+                @Html.ActionLink("Delete", "Delete", "Accommodation", new { id = item.ID }, "")
+            </td>
+        </tr>
+    }
+}
+
+</table>
+
+@using (Html.BeginForm("SearchAccommodations", "Accommodation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group row">
+        <label class="control-label col-md-2">Accommodation type</label>
+        <div class="col-sm-10">
+            <select name="AccommodationType" id="AccommodationType">
+                @foreach (var type in Enum.GetValues(typeof(AccommodationType)))
+                {
+                    <option value="@type">@type</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Name</label>
+        <div class="col-md-10">
+            <input name="Name" type="text">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Pool</label>
+        <div class="col-sm-10">
+            <select name="Pool" id="Pool">
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Spa</label>
+        <div class="col-sm-10">
+            <select name="Spa" id="Spa">
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Disability</label>
+        <div class="col-sm-10">
+            <select name="Disability" id="Disability">
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Wifi</label>
+        <div class="col-sm-10">
+            <select name="Wifi" id="Wifi">
+                <option value="true">true</option>
+                <option value="false">false</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <button class="btn btn-success">Search</button>
+    </div>
+}

@@ -39,6 +39,30 @@ namespace MVC.Controllers
 
 			return View("Details");
 		}
+
+		//Akcija koja otvara listu svih smestaja
+		public ActionResult OpenManagerAccommodationsListPage()
+		{
+			//Ocitavamo sve smestaje iz baze
+			LoadAccommodations();
+
+			//Ubacujemo smestaje u sesiju
+			System.Web.HttpContext.Current.Application["accommodations"] = accommodations;
+
+			return View("ManagerAccommodationsList");
+		}
+
+		//Akcija koja otvara prozor za kreiranje smestaja
+		public ActionResult OpenCreatePage()
+		{
+			//Ocitavamo sve smestajne jedinice iz baze
+			LoadAccommodationUnits();
+
+			//Ubacujemo smestajne jedinice u sesiju
+			System.Web.HttpContext.Current.Application["accommodationUnits"] = accommodationUnits;
+
+			return View("Create");
+		}
 		#endregion
 
 		#region Load funkcije
