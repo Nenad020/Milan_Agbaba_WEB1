@@ -1,12 +1,25 @@
-﻿@model MVC.Models.Accommodation
+﻿@using MVC.Models
+@model Accommodation
 
 @{
     ViewBag.Title = "Create";
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+
+    List<AccommodationUnit> accommodationUnits = (List<AccommodationUnit>)HttpContext.Current.Application["accommodationUnits"];
 }
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Accommodation", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -19,6 +32,18 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Accommodation type</label>
+            <div class="col-md-10">
+                <select name="AccommodationType" id="AccommodationType" class="form-control">
+                    @foreach (var type in Enum.GetValues(typeof(AccommodationType)))
+                    {
+                        <option class="form-control" value="@type">@type</option>
+                    }
+                </select>
             </div>
         </div>
 
@@ -71,12 +96,17 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IsRemoved, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Accommodation units</label>
             <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsRemoved)
-                    @Html.ValidationMessageFor(model => model.IsRemoved, "", new { @class = "text-danger" })
-                </div>
+                <select name="AccommodationUnitID" id="AccommodationUnitID" class="form-control" multiple>
+                    @foreach (var unit in accommodationUnits)
+                    {
+                        if (unit.IsRemoved == false)
+                        {
+                            <option class="form-control" value="@unit.ID">@unit.Price</option>
+                        }
+                    }
+                </select>
             </div>
         </div>
 
@@ -87,7 +117,3 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

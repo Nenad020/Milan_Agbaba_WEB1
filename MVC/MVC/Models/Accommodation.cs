@@ -59,7 +59,7 @@ namespace MVC.Models
 		//Pogledaj kako je napisano u User.cs
 		public bool Validate()
 		{
-			if (Name == null || Name == "" || Stars <= 0)
+			if (Name == null || Name == "" || Stars <= 0 || Stars >= 6 || AccommodationUnitID.Count == 0)
 			{
 				return false;
 			}

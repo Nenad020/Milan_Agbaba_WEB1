@@ -63,6 +63,32 @@ namespace MVC.Controllers
 
 			return View("Create");
 		}
+
+		//Akcija vrsi kreiranje novog smestaja
+		public ActionResult Create(Accommodation accommodation)
+		{
+			//Vrsi se validacija unetih vrednosti
+			bool validate = accommodation.Validate();
+			if (validate == false)
+			{
+				ViewBag.Message = "Input fields can't be empty!";
+				return View("Create");
+			}
+
+			//Ocitavamo sve smestaje iz baze
+			LoadAccommodations();
+
+			//Generisemo novi id
+			accommodation.GenerateID();
+
+			//Dodamo ga u listu
+			accommodations.Add(accommodation);
+
+			//Sacuvamo izmene
+			SaveAccommodations();
+			
+			return RedirectToAction("OpenManagerAccommodationsListPage");
+		}
 		#endregion
 
 		#region Load funkcije
@@ -138,6 +164,14 @@ namespace MVC.Controllers
 
 			//Ako ga nismo nasli, baci null
 			return null;
+		}
+		#endregion
+
+		#region Save funkcije
+		//Listu smestaja upisujemo u bazu
+		private void SaveAccommodations()
+		{
+			XMLHelper.SaveAccommodations(accommodations);
 		}
 		#endregion
 	}

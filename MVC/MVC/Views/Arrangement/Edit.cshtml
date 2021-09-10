@@ -40,6 +40,44 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-md-2">Arrangement type</label>
+            <div class="col-md-10">
+                <select name="ArrangementType" id="ArrangementType" class="form-control">
+                    @foreach (var type in Enum.GetValues(typeof(ArrangementType)))
+                    {
+                        if ((ArrangementType)type == arrangement.ArrangementType)
+                        {
+                            <option class="form-control" value="@type" selected>@type</option>
+                        }
+                        else
+                        {
+                            <option class="form-control" value="@type">@type</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Transportation type</label>
+            <div class="col-md-10">
+                <select name="TransportationType" id="TransportationType" class="form-control">
+                    @foreach (var type in Enum.GetValues(typeof(TransportationType)))
+                    {
+                        if ((TransportationType)type == arrangement.TransportationType)
+                        {
+                            <option class="form-control" value="@type" selected>@type</option>
+                        }
+                        else
+                        {
+                            <option class="form-control" value="@type">@type</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Destination, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.Destination, new { Value = arrangement.Destination })

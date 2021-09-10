@@ -44,9 +44,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Wifi)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsRemoved)
-        </th>
         <th></th>
     </tr>
 
@@ -72,9 +69,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Wifi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsRemoved)
             </td>
             <td>
                 @Html.ActionLink("Edit", "OpenEditPage", "Accommodation", new { id = item.ID }, "") |

@@ -14,7 +14,7 @@ namespace MVC
 		//TODO: PROMENI PUTANJU KAD POKRECES PROJEKAT SA DRUGOG RACUNARA
 		private static string GetPath()
 		{
-			return @"D:\Za Faks\Projekti za Faks\Web1\Milan_Agbaba_WEB1\MVC";
+			return @"D:\Projekti\Web_1\Projekti\Milan_Agbaba_WEB1\MVC";
 		}
 
 		//Otvara xml fajl gde se nalaze korisnici i vraca listu

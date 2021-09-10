@@ -29,4 +29,19 @@
     </AccommodationUnitID>
     <IsRemoved>false</IsRemoved>
   </Accommodation>
+  <Accommodation>
+    <ID>45109</ID>
+    <AccommodationType>Motel</AccommodationType>
+    <Name>112</Name>
+    <Stars>3</Stars>
+    <Pool>true</Pool>
+    <Spa>true</Spa>
+    <Disability>true</Disability>
+    <Wifi>true</Wifi>
+    <AccommodationUnitID>
+      <int>2</int>
+      <int>3</int>
+    </AccommodationUnitID>
+    <IsRemoved>false</IsRemoved>
+  </Accommodation>
 </ArrayOfAccommodation>
