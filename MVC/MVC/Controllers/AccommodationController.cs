@@ -12,6 +12,7 @@ namespace MVC.Controllers
 		private List<Arrangement> arrangements = new List<Arrangement>();
 		private List<Accommodation> accommodations = new List<Accommodation>();
 		private List<AccommodationUnit> accommodationUnits = new List<AccommodationUnit>();
+		private List<Reservation> reservations = new List<Reservation>();
 
 		#region Akcije
 		//Akcija koja otvara prozor sa detaljima smestaja i njegovih smestajnih jedinica
@@ -89,6 +90,37 @@ namespace MVC.Controllers
 			
 			return RedirectToAction("OpenManagerAccommodationsListPage");
 		}
+
+		//Akcija koja brise smestaj
+		public ActionResult Delete(int id)
+		{
+			//Ucitavamo iz baze sve smestaje i rezervacije
+			LoadAccommodations();
+			LoadReservations();
+
+			//Trazimo smestaj iz baze na osnovu idija
+			Accommodation accommodation = GetAccommodation(id);
+
+			//Prolazimo kroz sve rezervacije
+			foreach (var reservation in reservations)
+			{
+				//Proveravamo da li neka smestajna jedinica unutar smestaja je zauzeta tj da li postoji rezervacija na njoj
+				if (accommodation.AccommodationUnitID.Contains(reservation.AccommodationUnitID) && reservation.ReservationStatus == ReservationStatus.Active)
+				{
+					//Ako postoji ispisi gresku
+					ViewBag.Message = $"You can't removed {accommodation.Name}, because there are some reservations!";
+					return RedirectToAction("OpenManagerAccommodationsListPage");
+				}
+			}
+
+			//Logicki obrisi smestaj
+			accommodation.IsRemoved = true;
+
+			//Sacuvaj izmene
+			SaveAccommodations();
+
+			return RedirectToAction("OpenManagerAccommodationsListPage");
+		}
 		#endregion
 
 		#region Load funkcije
@@ -108,6 +140,12 @@ namespace MVC.Controllers
 		private void LoadAccommodationUnits()
 		{
 			accommodationUnits = XMLHelper.LoadAccommodationUnits();
+		}
+
+		//Ucitavamo podatke iz baze i upisujemo u listu
+		private void LoadReservations()
+		{
+			reservations = XMLHelper.LoadReservations();
 		}
 		#endregion
 
