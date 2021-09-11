@@ -191,11 +191,12 @@
     <Content Include="Views\Accommodation\ManagerAccommodationsList.cshtml" />
     <Content Include="Views\Accommodation\Create.cshtml" />
     <Content Include="Views\Accommodation\Edit.cshtml" />
+    <Content Include="Views\AccommodationUnit\ManagerAccommodationUnitsList.cshtml" />
+    <Content Include="Views\AccommodationUnit\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Pictures\" />
-    <Folder Include="Views\AccommodationUnit\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

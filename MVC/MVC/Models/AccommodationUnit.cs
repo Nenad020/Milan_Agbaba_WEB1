@@ -42,7 +42,7 @@ namespace MVC.Models
 		//Pogledaj kako je napisano u User.cs
 		public bool Validate()
 		{
-			if (NumberOfFreeRooms <= 0 || Price <= 0 || NumberOfTotalRooms <= 0)
+			if (Price <= 0 || NumberOfTotalRooms <= 0)
 			{
 				return false;
 			}

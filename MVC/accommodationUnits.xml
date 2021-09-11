@@ -24,4 +24,12 @@
     <Price>100</Price>
     <IsRemoved>false</IsRemoved>
   </AccommodationUnit>
+  <AccommodationUnit>
+    <ID>500419</ID>
+    <NumberOfFreeRooms>2</NumberOfFreeRooms>
+    <NumberOfTotalRooms>2</NumberOfTotalRooms>
+    <Pets>true</Pets>
+    <Price>1</Price>
+    <IsRemoved>false</IsRemoved>
+  </AccommodationUnit>
 </ArrayOfAccommodationUnit>
