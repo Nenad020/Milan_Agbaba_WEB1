@@ -33,14 +33,13 @@
     <ID>45109</ID>
     <AccommodationType>Motel</AccommodationType>
     <Name>112</Name>
-    <Stars>3</Stars>
-    <Pool>true</Pool>
-    <Spa>true</Spa>
+    <Stars>1</Stars>
+    <Pool>false</Pool>
+    <Spa>false</Spa>
     <Disability>true</Disability>
     <Wifi>true</Wifi>
     <AccommodationUnitID>
-      <int>2</int>
-      <int>3</int>
+      <int>1</int>
     </AccommodationUnitID>
     <IsRemoved>false</IsRemoved>
   </Accommodation>

@@ -190,6 +190,7 @@
     <Content Include="Views\Arrangement\Edit.cshtml" />
     <Content Include="Views\Accommodation\ManagerAccommodationsList.cshtml" />
     <Content Include="Views\Accommodation\Create.cshtml" />
+    <Content Include="Views\Accommodation\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

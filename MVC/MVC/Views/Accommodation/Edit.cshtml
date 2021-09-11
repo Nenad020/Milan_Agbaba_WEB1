@@ -1,0 +1,136 @@
+﻿@using MVC.Models
+@model Accommodation
+
+@{
+    ViewBag.Title = "Edit";
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+
+    Accommodation accommodation = (Accommodation)HttpContext.Current.Application["accommodation"];
+    List<AccommodationUnit> accommodationUnits = (List<AccommodationUnit>)HttpContext.Current.Application["accommodationUnits"];
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Accommodation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Accommodation</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.Hidden("ID", accommodation.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Name, new { Value = accommodation.Name })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Accommodation type</label>
+            <div class="col-md-10">
+                <select name="AccommodationType" id="AccommodationType" class="form-control">
+                    @foreach (var type in Enum.GetValues(typeof(AccommodationType)))
+                    {
+                        if (accommodation.AccommodationType == (AccommodationType)type)
+                        {
+                            <option selected class="form-control" value="@type">@type</option>
+                        }
+                        else
+                        {
+                            <option class="form-control" value="@type">@type</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Stars, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Stars, new { Value = accommodation.Stars })
+                @Html.ValidationMessageFor(model => model.Stars, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pool, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.TextBoxFor(model => model.Pool, new { Value = accommodation.Pool })
+                    @Html.ValidationMessageFor(model => model.Pool, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Spa, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.TextBoxFor(model => model.Spa, new { Value = accommodation.Spa })
+                    @Html.ValidationMessageFor(model => model.Spa, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Disability, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.TextBoxFor(model => model.Disability, new { Value = accommodation.Disability })
+                    @Html.ValidationMessageFor(model => model.Disability, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Wifi, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.TextBoxFor(model => model.Wifi, new { Value = accommodation.Wifi })
+                    @Html.ValidationMessageFor(model => model.Wifi, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Accommodation units</label>
+            <div class="col-md-10">
+                <select name="AccommodationUnitID" id="AccommodationUnitID" class="form-control" multiple>
+                    @foreach (var unit in accommodationUnits)
+                    {
+                        if (unit.IsRemoved == false)
+                        {
+                            if (accommodation.AccommodationUnitID.Contains(unit.ID))
+                            {
+                                <option selected class="form-control" value="@unit.ID">@unit.Price</option>
+                            }
+                            else
+                            {
+                                <option class="form-control" value="@unit.ID">@unit.Price</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Edit" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

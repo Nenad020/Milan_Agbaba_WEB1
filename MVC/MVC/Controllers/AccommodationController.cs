@@ -121,6 +121,74 @@ namespace MVC.Controllers
 
 			return RedirectToAction("OpenManagerAccommodationsListPage");
 		}
+
+		//Akcija koja otvara prozor za modifikaciju izabranog smestaja
+		public ActionResult OpenEditPage(int id)
+		{
+			//Ocitavamo sve smestaje i smestajne jedinice iz baze
+			LoadAccommodations();
+			LoadAccommodationUnits();
+
+			//Trazimo izabrani smestaj na osnovu idija
+			Accommodation accommodation = GetAccommodation(id);
+
+			//Ubacujemo smestaj i smestajne jedinice u sesiju
+			System.Web.HttpContext.Current.Application["accommodation"] = accommodation;
+			System.Web.HttpContext.Current.Application["accommodationUnits"] = accommodationUnits;
+
+			return View("Edit");
+		}
+
+		//Akcija koja vrsi azuriranje smestaja
+		public ActionResult Edit(int ID, Accommodation accommodation)
+		{
+			//Vrsi se validacija unetih vrednosti
+			bool validate = accommodation.Validate();
+			if (validate == false)
+			{
+				ViewBag.Message = "Input fields can't be empty!";
+				return View("Edit");
+			}
+
+			//Ocitavamo sve smestaje iz baze
+			LoadAccommodations();
+
+			//Proveravamo da li je smestaj postoji u bazi
+			Accommodation exists = GetAccommodation(ID);
+			if (exists != null)
+			{
+				//Azuriramo podatke
+				exists.AccommodationType = accommodation.AccommodationType;
+				exists.Disability = accommodation.Disability;
+				exists.Name = accommodation.Name;
+				exists.Pool = accommodation.Pool;
+				exists.Spa = accommodation.Spa;
+				exists.Stars = accommodation.Stars;
+				exists.Wifi = accommodation.Wifi;
+				exists.AccommodationUnitID = accommodation.AccommodationUnitID;
+			}
+
+			//Sacuvamo izmene
+			SaveAccommodations();
+
+			//I otvaramo akciju za ispis menadzerovih smestaja
+			return RedirectToAction("OpenManagerAccommodationsListPage");
+		}
+
+		//Akcija sluzi za pretragu smestaja
+		public ActionResult SearchAccommodations(AccommodationSearchModel searchModel)
+		{
+			//Ocitavamo sve smestaje iz baze
+			LoadAccommodations();
+
+			//Pozivamo funkciju za pretragu
+			List<Accommodation> output = SearchAccommodationsPrivate(searchModel);
+
+			//Ubacujemo smestaje u sesiju
+			System.Web.HttpContext.Current.Application["accommodations"] = output;
+
+			return View("ManagerAccommodationsList");
+		}
 		#endregion
 
 		#region Load funkcije
@@ -211,6 +279,89 @@ namespace MVC.Controllers
 		{
 			XMLHelper.SaveAccommodations(accommodations);
 		}
+		#endregion
+
+		#region Pomocne funkcije
+
+		//Metoda koja vrsi pretragu smestaja
+		private List<Accommodation> SearchAccommodationsPrivate(AccommodationSearchModel searchModel)
+		{
+			//Lista u kojoj cuvamo povratnu vrednost metode
+			//Svi smestaji koji zadovoljavaju pretragu
+			List<Accommodation> output = new List<Accommodation>();
+
+			//Prolazimo kroz svaki smestaj
+			foreach (var accommodation in accommodations)
+			{
+				//Provera za tip smestaja
+				if (searchModel.AccommodationType != null)
+				{
+					if (accommodation.AccommodationType != searchModel.AccommodationType)
+					{
+						//Ako ne zadovoljava uslov, preskoci entitet
+						continue;
+					}
+				}
+
+				//Provera za ime smestaja
+				if (searchModel.Name != null && searchModel.Name != "")
+				{
+					//Izvlacimo indeks prvog slova unetog imena u pretrazi
+					int index = accommodation.Name.ToLower().IndexOf(searchModel.Name.ToLower());
+					if (index < 0)
+					{
+						//Ako ne zadovoljava uslov, preskoci entitet
+						continue;
+					}
+				}
+
+				//Provera za bazen
+				if (searchModel.Pool != null)
+				{
+					if (accommodation.Pool != searchModel.Pool)
+					{
+						//Ako ne zadovoljava uslov, preskoci entitet
+						continue;
+					}
+				}
+
+				//Provera za spa
+				if (searchModel.Spa != null)
+				{
+					if (accommodation.Spa != searchModel.Spa)
+					{
+						//Ako ne zadovoljava uslov, preskoci entitet
+						continue;
+					}
+				}
+
+				//Provera za invalide
+				if (searchModel.Disability != null)
+				{
+					if (accommodation.Disability != searchModel.Disability)
+					{
+						//Ako ne zadovoljava uslov, preskoci entitet
+						continue;
+					}
+				}
+
+				//Provera za wifi
+				if (searchModel.Wifi != null)
+				{
+					if (accommodation.Wifi != searchModel.Wifi)
+					{
+						//Ako ne zadovoljava uslov, preskoci entitet
+						continue;
+					}
+				}
+
+				//I na kraju dolazi da je entitet zadovoljivo sve uslove i dodajemo ga u listu
+				output.Add(accommodation);
+			}
+
+			return output;
+		}
+
 		#endregion
 	}
 }
