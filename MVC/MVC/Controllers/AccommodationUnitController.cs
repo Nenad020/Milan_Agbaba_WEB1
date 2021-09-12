@@ -111,6 +111,68 @@ namespace MVC.Controllers
 
 			return RedirectToAction("OpenManagerAccommodationUnitsListPage");
 		}
+
+		//Akcija koja otvara prozor za modifikaciju izabrane smestajne jedinice
+		public ActionResult OpenEditPage(int id)
+		{
+			//Ocitavamo svesmestajne jedinice iz baze
+			LoadAccommodationUnits();
+
+			//Trazimo izabranu smestajnu jedinicu na osnovu idija
+			AccommodationUnit unit = GetAccommodationUnit(id);
+
+			//Ubacujemo smestajnu jedinicu u sesiju
+			System.Web.HttpContext.Current.Application["accommodationUnit"] = unit;
+
+			return View("Edit");
+		}
+
+		//Akcija koja vrsi azuriranje smestajne jedinice
+		public ActionResult Edit(int ID, AccommodationUnit accommodationUnit)
+		{
+			//Vrsi se validacija unetih vrednosti
+			bool validate = accommodationUnit.Validate();
+			if (validate == false)
+			{
+				ViewBag.Message = "Input fields can't be empty!";
+				return View("Edit");
+			}
+
+			//Ocitavamo sve smestajne jedinice iz baze
+			LoadAccommodationUnits();
+
+			//Proveravamo da li je smestajna jedinica postoji u bazi
+			AccommodationUnit exists = GetAccommodationUnit(ID);
+			if (exists != null)
+			{
+				//Azuriramo podatke
+				exists.NumberOfFreeRooms = accommodationUnit.NumberOfTotalRooms;
+				exists.Pets = accommodationUnit.Pets;
+				exists.Price = accommodationUnit.Price;
+				exists.NumberOfTotalRooms = accommodationUnit.NumberOfTotalRooms;
+			}
+
+			//Sacuvamo izmene
+			SaveAccommodationUnits();
+
+			//I otvaramo akciju za ispis menadzerovih smestajnih jedinica
+			return RedirectToAction("OpenManagerAccommodationUnitsListPage");
+		}
+
+		//Akcija koja vrsi pretragu svih smestajnih jedinica
+		public ActionResult SearchAccommodationUnitsManager(AccommodationUnitSearchModel searchModel)
+		{
+			//Ocitavamo sve smestajne jedinice iz baze
+			LoadAccommodationUnits();
+			
+			//Poziva se metoda za pretragu
+			List<AccommodationUnit> output = SearchAccommodationUnitsPrivate(accommodationUnits, searchModel);
+
+			//U sesiju ubacujemo pretrazene rezultate
+			System.Web.HttpContext.Current.Application["accommodationUnits"] = output;
+
+			return View("ManagerAccommodationUnitsList");
+		}
 		#endregion
 
 		#region Pomocne funkcije

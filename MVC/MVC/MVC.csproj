@@ -126,6 +126,7 @@
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogInRegisterController.cs" />
+    <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="GeneratorHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -193,6 +194,8 @@
     <Content Include="Views\Accommodation\Edit.cshtml" />
     <Content Include="Views\AccommodationUnit\ManagerAccommodationUnitsList.cshtml" />
     <Content Include="Views\AccommodationUnit\Create.cshtml" />
+    <Content Include="Views\AccommodationUnit\Edit.cshtml" />
+    <Content Include="Views\Reservation\ManagerReservationList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

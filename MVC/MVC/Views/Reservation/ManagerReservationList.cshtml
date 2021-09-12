@@ -1,0 +1,67 @@
+﻿@using MVC.Models
+@model IEnumerable<Reservation>
+
+@{
+    ViewBag.Title = "ManagerReservationList";
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+
+    List<Arrangement> arrangements = (List<Arrangement>)HttpContext.Current.Application["arrangements"];
+    List<Reservation> reservations = (List<Reservation>)HttpContext.Current.Application["reservations"];
+}
+
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+
+<h2>ManagerReservationList</h2>
+
+<table class="table sortable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TouristUsername)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReservationStatus)
+        </th>
+        <th>
+            @Html.Label("ArrangementName")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in reservations)
+{
+    if (item.IsRemoved == false)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TouristUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationStatus)
+            </td>
+            <td>
+                @foreach (var arrangement in arrangements)
+                {
+                    if (arrangement.ID == item.ArrangementID)
+                    {
+                        @Html.DisplayFor(modelItem => arrangement.Name)
+                        break;
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsRemoved)
+            </td>
+        </tr>
+    }
+}
+
+</table>

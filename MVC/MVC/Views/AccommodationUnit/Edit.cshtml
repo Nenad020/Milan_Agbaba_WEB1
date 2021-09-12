@@ -1,0 +1,64 @@
+﻿@using MVC.Models
+@model AccommodationUnit
+
+@{
+    ViewBag.Title = "Edit";
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+
+    AccommodationUnit accommodationUnit = (AccommodationUnit)HttpContext.Current.Application["accommodationUnit"];
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "AccommodationUnit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>AccommodationUnit</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.Hidden("ID", accommodationUnit.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NumberOfTotalRooms, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.NumberOfTotalRooms, new { Value = accommodationUnit.NumberOfTotalRooms })
+                @Html.ValidationMessageFor(model => model.NumberOfTotalRooms, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pets, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.TextBoxFor(model => model.Pets, new { Value = accommodationUnit.Pets })
+                    @Html.ValidationMessageFor(model => model.Pets, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Price, new { Value = accommodationUnit.Price })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Edit" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
