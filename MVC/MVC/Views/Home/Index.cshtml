@@ -69,15 +69,25 @@
 }
 </table>
 
-@if (user != null && user.Role == Role.Manager)
+@if (user != null)
 {
-    @Html.ActionLink("See manager arrangements", "OpenManagerArrangementsListPage", "Arrangement")
-    <br>
-    @Html.ActionLink("See manager accommodations", "OpenManagerAccommodationsListPage", "Accommodation")
-    <br>
-    @Html.ActionLink("See manager accommodation units", "OpenManagerAccommodationUnitsListPage", "AccommodationUnit")
-    <br>
-    @Html.ActionLink("See manager reservations", "OpenManagerReservationsListPage", "Reservation")
-    <br>
-    @Html.ActionLink("See manager comments", "OpenManagerCommentsListPage", "Comment")
+    if (user.Role == Role.Manager)
+    {
+        @Html.ActionLink("See manager arrangements", "OpenManagerArrangementsListPage", "Arrangement")
+        <br>
+        @Html.ActionLink("See manager accommodations", "OpenManagerAccommodationsListPage", "Accommodation")
+        <br>
+        @Html.ActionLink("See manager accommodation units", "OpenManagerAccommodationUnitsListPage", "AccommodationUnit")
+        <br>
+        @Html.ActionLink("See manager reservations", "OpenManagerReservationsListPage", "Reservation")
+        <br>
+        @Html.ActionLink("See manager comments", "OpenManagerCommentsListPage", "Comment")
+    }
+    else if (user.Role == Role.Admin)
+    {
+    }
+    else
+    {
+        @Html.ActionLink("See tourist reservations", "OpenTouristReservationsListPage", "Reservation")
+    }
 }

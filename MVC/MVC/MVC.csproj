@@ -139,6 +139,7 @@
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\SearchModels\AccommodationSearchModel.cs" />
     <Compile Include="Models\SearchModels\AccommodationUnitSearchModel.cs" />
+    <Compile Include="Models\SearchModels\ReservationSearchModel.cs" />
     <Compile Include="Models\SearchModels\ArrangementSearchModel.cs" />
     <Compile Include="Models\StartLocation.cs" />
     <Compile Include="Models\User.cs" />
@@ -197,6 +198,8 @@
     <Content Include="Views\AccommodationUnit\Edit.cshtml" />
     <Content Include="Views\Reservation\ManagerReservationList.cshtml" />
     <Content Include="Views\Comment\ManagerCommentList.cshtml" />
+    <Content Include="Views\Reservation\Reserve.cshtml" />
+    <Content Include="Views\Reservation\UserReservationList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

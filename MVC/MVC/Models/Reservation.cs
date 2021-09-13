@@ -42,7 +42,7 @@ namespace MVC.Models
 		//Pogledaj kako je napisano u User.cs
 		public bool Validate()
 		{
-			if (TouristUsername == null || TouristUsername == "" || ArrangementID <= 0 ||  AccommodationUnitID <= 0)
+			if (AccommodationUnitID <= 0)
 			{
 				return false;
 			}

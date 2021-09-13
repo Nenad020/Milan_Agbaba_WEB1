@@ -1,0 +1,51 @@
+﻿@using MVC.Models
+@model Reservation
+
+@{
+    ViewBag.Title = "Reserve";
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+
+    List<AccommodationUnit> accommodationUnits = (List<AccommodationUnit>)HttpContext.Current.Application["accommodationUnits"];
+}
+
+<h2>Reserve</h2>
+
+@using (Html.BeginForm("Reserve", "Reservation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Reservation</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.AccommodationUnitID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select name="AccommodationUnitID" id="AccommodationUnitID" class="form-control">
+                    @foreach (var accommodationUnit in accommodationUnits)
+                    {
+                        if (accommodationUnit.IsRemoved == false && accommodationUnit.NumberOfFreeRooms > 0)
+                        {
+                            <option class="form-control" value="@accommodationUnit.ID">@accommodationUnit.Price</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Reserve" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
