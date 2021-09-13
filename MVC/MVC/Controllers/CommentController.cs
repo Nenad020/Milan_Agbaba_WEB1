@@ -113,6 +113,71 @@ namespace MVC.Controllers
 			//Pozovemo view za Logovanje korisnika
 			return View("CommentList");
 		}
+
+		//Akcija koja otvara prozor za ispis svih komentara u okviru menadzerovih aranzmana
+		public ActionResult OpenManagerCommentsListPage()
+		{
+			//Ocitavamo sve komentare i aranzmane
+			LoadComments();
+			LoadArrangements();
+
+			//Vadimo korisnika iz sesija i pravimo praznu listu komentara
+			User user = (User)System.Web.HttpContext.Current.Application["user"];
+			List<Comment> output = new List<Comment>();
+
+			//Prolazimo kroz sve komentare
+			foreach (var comment in comments)
+			{
+				//Proveravamo da li u menadzerovoj listi kreiranih aranzmana sadrzi id aranzmana datog komentara
+				if (user.CreatedArrangemetsID.Contains(comment.ArrangementID))
+				{
+					//Ako sadrzi dodaj u ispisnu listu
+					output.Add(comment);
+				}
+			}
+
+			//Listu komentara i aranzmana ubacujemo u sesiju
+			System.Web.HttpContext.Current.Application["comments"] = comments;
+			System.Web.HttpContext.Current.Application["arrangements"] = arrangements;
+
+			return View("ManagerCommentList");
+		}
+
+		//Akcija koja sluzi za odobravanje komentara
+		public ActionResult Approve(int id)
+		{
+			//Ucitavamo sve komentare
+			LoadComments();
+
+			//Trazimo komentar iz baze na osnovu idija
+			Comment comment = GetComment(id);
+
+			//Polje za odobravanje postavimo na tacno
+			comment.IsApproved = true;
+
+			//Sacuvamo izmene
+			SaveComments();
+
+			return RedirectToAction("OpenManagerCommentsListPage");
+		}
+
+		//Akcija koja sluzi za odbijanje komentara
+		public ActionResult Ban(int id)
+		{
+			//Ucitavamo sve komentare
+			LoadComments();
+
+			//Trazimo komentar iz baze na osnovu idija
+			Comment comment = GetComment(id);
+
+			//Polje za odobravanje postavimo na netacno
+			comment.IsApproved = false;
+
+			//Sacuvamo izmene
+			SaveComments();
+
+			return RedirectToAction("OpenManagerCommentsListPage");
+		}
 		#endregion
 
 		#region Load funkcije
@@ -227,6 +292,24 @@ namespace MVC.Controllers
 				{
 					//Nasli smo ga
 					return reservation;
+				}
+			}
+
+			//Ako ga nismo nasli, baci null
+			return null;
+		}
+
+		//Trazi se komentar iz liste na osnovu idija
+		private Comment GetComment(int id)
+		{
+			//Prolazimo kroz sve komentare
+			foreach (var comment in comments)
+			{
+				//Ako je id komentara isti kao onaj u parametru
+				if (comment.ID == id)
+				{
+					//Nasli smo ga
+					return comment;
 				}
 			}
 

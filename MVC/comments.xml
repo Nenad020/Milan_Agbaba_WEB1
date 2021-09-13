@@ -14,6 +14,14 @@
     <ArrangementID>2</ArrangementID>
     <Text>sadf</Text>
     <Grade>3</Grade>
+    <IsApproved>true</IsApproved>
+  </Comment>
+  <Comment>
+    <ID>623359</ID>
+    <TouristUsername>Nemac44</TouristUsername>
+    <ArrangementID>2</ArrangementID>
+    <Text>s</Text>
+    <Grade>3</Grade>
     <IsApproved>false</IsApproved>
   </Comment>
 </ArrayOfComment>

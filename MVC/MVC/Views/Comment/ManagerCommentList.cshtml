@@ -1,0 +1,82 @@
+﻿@using MVC.Models
+@model IEnumerable<Comment>
+
+@{
+    ViewBag.Title = "ManagerCommentList";
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+
+    List<Comment> comments = (List<Comment>)HttpContext.Current.Application["comments"];
+    List<Arrangement> arrangements = (List<Arrangement>)HttpContext.Current.Application["arrangements"];
+}
+
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+
+<h2>ManagerCommentList</h2>
+
+<table class="table sortable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TouristUsername)
+        </th>
+        <th>
+            @Html.Label("ArrangementName")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Grade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsApproved)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in comments) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TouristUsername)
+        </td>
+        <td>
+            @foreach (var arrangement in arrangements)
+            {
+                if (arrangement.ID == item.ArrangementID)
+                {
+                    @Html.DisplayFor(modelItem => arrangement.Name)
+                    break;
+                }
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Text)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Grade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsApproved)
+        </td>
+        <td>
+            @if (item.IsApproved == true)
+            {
+                @Html.ActionLink("Ban", "Ban", "Comment", new { id = item.ID }, "")
+            }
+            else
+            {
+                @Html.ActionLink("Approve", "Approve", "Comment", new { id = item.ID }, "")
+            }
+        </td>
+    </tr>
+}
+
+</table>
