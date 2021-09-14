@@ -85,6 +85,9 @@
     }
     else if (user.Role == Role.Admin)
     {
+        @Html.ActionLink("See admin users", "OpenUsersListPage", "User")
+        <br>
+        @Html.ActionLink("Add new manager", "OpenAddManagerPage", "User")
     }
     else
     {

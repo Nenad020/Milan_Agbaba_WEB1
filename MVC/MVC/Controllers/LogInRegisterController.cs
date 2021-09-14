@@ -80,6 +80,14 @@ namespace MVC.Controllers
 				return View("LogIn");
 			}
 
+			//Proverava se da li je korisnik banovan
+			bool isBaned = CheckIfUserIsBaned(user.Username);
+			if (isBaned == true)
+			{
+				ViewBag.Message = "User is baned";
+				return View("LogIn");
+			}
+
 			//Ubacujemo korisnika u sesiju
 			System.Web.HttpContext.Current.Application["user"] = exists;
 
@@ -183,6 +191,25 @@ namespace MVC.Controllers
 
 			//U suprotnom ne postoji
 			return null;
+		}
+
+		//Proveravamo da li je korisnik banovan od strane admina
+		private bool CheckIfUserIsBaned(string username)
+		{
+			//Prolazimo kroz svakog korisnika
+			foreach (var user in users)
+			{
+				//Ako je korisnicko ime jednako onom sto smo prosledili kao parametar
+				//I ako je banovan
+				if (user.Username == username && user.IsBaned == true)
+				{
+					//Vrati da je tacno
+					return true;
+				}
+			}
+
+			//Vrati da je netacno
+			return false;
 		}
 
 		//Vrsi se provera da li korisnik postoji u listi korisnika

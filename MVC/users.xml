@@ -40,7 +40,7 @@
     <Role>Tourist</Role>
     <CreatedArrangemetsID />
     <NumberOfCanceledTrips>2</NumberOfCanceledTrips>
-    <IsBaned>false</IsBaned>
+    <IsBaned>true</IsBaned>
   </User>
   <User>
     <Username>manager2</Username>
@@ -54,6 +54,19 @@
     <CreatedArrangemetsID>
       <int>961892</int>
     </CreatedArrangemetsID>
+    <NumberOfCanceledTrips>0</NumberOfCanceledTrips>
+    <IsBaned>false</IsBaned>
+  </User>
+  <User>
+    <Username>a</Username>
+    <Password>a</Password>
+    <Name>a</Name>
+    <Lastname>a</Lastname>
+    <Gender>Male</Gender>
+    <Email>a</Email>
+    <DateOfBirth>2021-09-01T00:00:00</DateOfBirth>
+    <Role>Manager</Role>
+    <CreatedArrangemetsID />
     <NumberOfCanceledTrips>0</NumberOfCanceledTrips>
     <IsBaned>false</IsBaned>
   </User>

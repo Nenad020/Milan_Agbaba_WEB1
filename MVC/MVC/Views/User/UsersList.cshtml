@@ -1,0 +1,119 @@
+﻿@using MVC.Models
+@model IEnumerable<User>
+
+@{
+    ViewBag.Title = "UsersList";
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+
+    List<User> users = (List<User>)HttpContext.Current.Application["users"];
+}
+
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+
+<h2>UsersList</h2>
+
+<table class="table sortable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lastname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfCanceledTrips)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in users)
+{
+    if (item.IsBaned == false)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfCanceledTrips)
+            </td>
+            <td>
+                @if (item.NumberOfCanceledTrips >= 2)
+                {
+                    @Html.ActionLink("Ban", "Ban", "User", new { username = item.Username }, "")
+                }
+            </td>
+        </tr>
+    }
+}
+
+</table>
+
+@using (Html.BeginForm("SearchUsers", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group row">
+        <label class="control-label col-md-2">Role</label>
+        <div class="col-sm-10">
+            <select name="Role" id="Role">
+                @foreach (var type in Enum.GetValues(typeof(Role)))
+                {
+                    <option value="@type">@type</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Name</label>
+        <div class="col-md-10">
+            <input name="Name" type="text">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Lastname</label>
+        <div class="col-md-10">
+            <input name="Lastname" type="text">
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <button class="btn btn-success">Search</button>
+    </div>
+}
