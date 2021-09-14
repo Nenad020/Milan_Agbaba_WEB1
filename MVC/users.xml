@@ -39,7 +39,7 @@
     <DateOfBirth>1999-01-24T00:00:00</DateOfBirth>
     <Role>Tourist</Role>
     <CreatedArrangemetsID />
-    <NumberOfCanceledTrips>0</NumberOfCanceledTrips>
+    <NumberOfCanceledTrips>2</NumberOfCanceledTrips>
     <IsBaned>false</IsBaned>
   </User>
   <User>

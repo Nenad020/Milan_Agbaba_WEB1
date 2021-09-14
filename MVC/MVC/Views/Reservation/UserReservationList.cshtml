@@ -1,51 +1,96 @@
-﻿@model IEnumerable<MVC.Models.Reservation>
+﻿@using MVC.Models
+@model IEnumerable<Reservation>
 
 @{
     ViewBag.Title = "UserReservationList";
+
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+
+    List<Arrangement> arrangements = (List<Arrangement>)HttpContext.Current.Application["arrangements"];
+    List<Reservation> reservations = (List<Reservation>)HttpContext.Current.Application["reservations"];
 }
+
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 
 <h2>UserReservationList</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table sortable">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.TouristUsername)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ArrangementID)
+            @Html.DisplayNameFor(model => model.ReservationStatus)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AccommodationUnitID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsRemoved)
+            @Html.Label("ArrangementName")
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TouristUsername)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ArrangementID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccommodationUnitID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsRemoved)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
+@foreach (var item in reservations)
+{
+    if (item.IsRemoved == false)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TouristUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationStatus)
+            </td>
+            <td>
+                @foreach (var arrangement in arrangements)
+                {
+                    if (arrangement.ID == item.ArrangementID)
+                    {
+                        @Html.DisplayFor(modelItem => arrangement.Name)
+                        break;
+                    }
+                }
+            </td>
+            <td>
+                @if (item.ReservationStatus == ReservationStatus.Active)
+                {
+                    @Html.ActionLink("Cancel", "Cancel", "Reservation", new { id = item.ID }, "")
+                }
+            </td>
+        </tr>
+    }
 }
 
 </table>
+
+@using (Html.BeginForm("SearchReservations", "Reservation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group row">
+        <label class="control-label col-md-2">Status</label>
+        <div class="col-sm-10">
+            <select name="ReservationStatus" id="ReservationStatus">
+                @foreach (var type in Enum.GetValues(typeof(ReservationStatus)))
+                {
+                    <option value="@type">@type</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-2">Arrangement name</label>
+        <div class="col-md-10">
+            <input name="ArrangementName" type="text">
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <button class="btn btn-success">Search</button>
+    </div>
+}

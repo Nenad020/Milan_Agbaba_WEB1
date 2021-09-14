@@ -2,7 +2,7 @@
 <ArrayOfAccommodationUnit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <AccommodationUnit>
     <ID>1</ID>
-    <NumberOfFreeRooms>14</NumberOfFreeRooms>
+    <NumberOfFreeRooms>15</NumberOfFreeRooms>
     <NumberOfTotalRooms>15</NumberOfTotalRooms>
     <Pets>true</Pets>
     <Price>200</Price>

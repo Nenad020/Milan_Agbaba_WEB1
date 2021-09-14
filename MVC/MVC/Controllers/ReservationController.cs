@@ -13,6 +13,7 @@ namespace MVC.Controllers
 		private List<Arrangement> arrangements = new List<Arrangement>();
 		private List<Accommodation> accommodations = new List<Accommodation>();
 		private List<AccommodationUnit> accommodationUnits = new List<AccommodationUnit>();
+		private List<User> users = new List<User>();
 
 		#region Akcije
 		//Akcija koja otvara prozor za ispis svih rezervacija u okviru menadzerovih aranzmana
@@ -150,8 +151,72 @@ namespace MVC.Controllers
 				}
 			}
 
-			//Rezervacije ubaci u sesiju
+			//Rezervacije i aranzmane ubaci u sesiju
+			System.Web.HttpContext.Current.Application["arrangements"] = arrangements;
 			System.Web.HttpContext.Current.Application["reservations"] = output;
+
+			return View("UserReservationList");
+		}
+
+		//Akcija sluzi za pretragu rezervacija
+		public ActionResult SearchReservations(ReservationSearchModel searchModel)
+		{
+			//Ocitavamo sve rezervacije i aranzmane iz baze
+			LoadReservations();
+			LoadArrangements();
+
+			//Trazimo korisnika iz sesije
+			User user = (User)System.Web.HttpContext.Current.Application["user"];
+
+			//Pravimo praznu listu rezervacije
+			List<Reservation> userReservations = new List<Reservation>();
+
+			//Prolazimo kroz sve rezervacije
+			foreach (var reservation in reservations)
+			{
+				//Gledamo da li korisnicko ime u rezervaciji odgovara korisnickom imenu trenutnu ulogovanog korisnika
+				if (reservation.TouristUsername == user.Username)
+				{
+					//Ako odgovara dodaj ga u listu za pretragu
+					userReservations.Add(reservation);
+				}
+			}
+
+			//Pozivamo funkciju za pretragu
+			List<Reservation> output = SearchReservationsPrivate(userReservations, searchModel);
+
+			//Ubacujemo rezervacije u sesiju
+			System.Web.HttpContext.Current.Application["reservations"] = output;
+
+			return View("UserReservationList");
+		}
+
+		//Akcija koja vrsi otkazivanje rezervacije
+		public ActionResult Cancel(string id)
+		{
+			//Iz baze ocitavamo sve rezervacije, smestajne jedinice i korisnike
+			LoadReservations();
+			LoadAccommodationUnits();
+			LoadUsers();
+
+			//Iz baze izvlacimo trazenu rezervaciju na osnovu idija
+			Reservation reservation = GetReservation(id);
+
+			//Proveravamo da li je aktivna
+			if (reservation.ReservationStatus != ReservationStatus.Active)
+			{
+				//Ako jeste ispisujemo poruku greske
+				ViewBag.Message = "Reservation needs to be active, so you can cancel it";
+				return View("UserReservationList");
+			}
+
+			//Pozivamo funkcije za promenu statusa rezervacije, povecanje otkazanih putovanja korisnika i povecanje slobodnih soba smestajne jedinice
+			ChangeReservationStatus(id, ReservationStatus.Canceled);
+			UpdateCancelReservations(reservation.TouristUsername);
+			IncrementAccommodaitonUnitRooms(reservation.AccommodationUnitID);
+
+			//Ubacujemo rezervacije u sesiju
+			System.Web.HttpContext.Current.Application["reservations"] = reservations;
 
 			return View("UserReservationList");
 		}
@@ -181,6 +246,12 @@ namespace MVC.Controllers
 		{
 			accommodationUnits = XMLHelper.LoadAccommodationUnits();
 		}
+
+		//Ucitavamo podatke iz baze i upisujemo u listu
+		private void LoadUsers()
+		{
+			users = XMLHelper.LoadUsers();
+		}
 		#endregion
 
 		#region Get funkcije
@@ -195,6 +266,24 @@ namespace MVC.Controllers
 				{
 					//Nasli smo ga
 					return reservation;
+				}
+			}
+
+			//Ako ga nismo nasli, baci null
+			return null;
+		}
+
+		//Trazi se korisnik iz liste na osnovu idija
+		private User GetUser(string username)
+		{
+			//Prolazimo kroz sve korisnike
+			foreach (var user in users)
+			{
+				//Ako je id korisnik isti kao onaj u parametru
+				if (user.Username == username)
+				{
+					//Nasli smo ga
+					return user;
 				}
 			}
 
@@ -264,6 +353,12 @@ namespace MVC.Controllers
 			XMLHelper.SaveReservations(reservations);
 		}
 
+		//Listu korisnika upisujemo u bazu
+		private void SaveUsers()
+		{
+			XMLHelper.SaveUsers(users);
+		}
+
 		//Listu smestajnih jedinica upisujemo u bazu
 		private void SaveAccommodationUnits()
 		{
@@ -309,6 +404,58 @@ namespace MVC.Controllers
 
 			//Cuvaju se izmene
 			SaveAccommodationUnits();
+		}
+
+		//Funkcija koja povecava broj otkazanih putovanja korisnika
+		private void UpdateCancelReservations(string username)
+		{
+			User user = GetUser(username);
+
+			//Povecava se kapacitet
+			user.NumberOfCanceledTrips++;
+
+			//Cuvaju se izmene
+			SaveUsers();
+		}
+
+		//Metoda koja vrsi pretragu rezervacija
+		private List<Reservation> SearchReservationsPrivate(List<Reservation> userReservations, ReservationSearchModel searchModel)
+		{
+			//Lista u kojoj cuvamo povratnu vrednost metode
+			//Sve rezervacije koji zadovoljavaju pretragu
+			List<Reservation> output = new List<Reservation>();	
+
+			foreach (var reservation in userReservations)
+			{
+				//Provera za status rezervacije
+				if (searchModel.ReservationStatus != null)
+				{
+					if (reservation.ReservationStatus != searchModel.ReservationStatus)
+					{
+						//Ako ne zadovoljava uslov, preskoci entitet
+						continue;
+					}
+				}
+
+				//Provera za naziv aranzmana
+				if (searchModel.ArrangementName != null && searchModel.ArrangementName != "")
+				{
+					//Trazimo aranzman iz baze na osnovu idija koji se nalazi u rezervaciji
+					Arrangement arrangement = GetArrangement(reservation.ArrangementID);
+
+					//Izvlacimo indeks prvog slova unetog imena u pretrazi
+					int index = arrangement.Name.ToLower().IndexOf(searchModel.ArrangementName.ToLower());
+					if (index < 0)
+					{
+						//Ako ne zadovoljava uslov, preskoci entitet
+						continue;
+					}
+				}
+
+				output.Add(reservation);
+			}
+
+			return output;
 		}
 		#endregion
 	}

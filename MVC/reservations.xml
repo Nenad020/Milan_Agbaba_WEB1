@@ -8,4 +8,12 @@
     <AccommodationUnitID>2</AccommodationUnitID>
     <IsRemoved>false</IsRemoved>
   </Reservation>
+  <Reservation>
+    <ID>Reservation_518569</ID>
+    <TouristUsername>Nemac44</TouristUsername>
+    <ReservationStatus>Canceled</ReservationStatus>
+    <ArrangementID>1</ArrangementID>
+    <AccommodationUnitID>1</AccommodationUnitID>
+    <IsRemoved>false</IsRemoved>
+  </Reservation>
 </ArrayOfReservation>
