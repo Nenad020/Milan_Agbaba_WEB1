@@ -218,7 +218,7 @@ namespace MVC.Controllers
 			//Ubacujemo rezervacije u sesiju
 			System.Web.HttpContext.Current.Application["reservations"] = reservations;
 
-			return View("UserReservationList");
+			return RedirectToAction("OpenTouristReservationsListPage");
 		}
 		#endregion
 
